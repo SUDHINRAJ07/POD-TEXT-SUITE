@@ -1,0 +1,2477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POD Text Suite - Print Optimization Studio</title>
+  <link rel="icon" type="image/x-icon" href="/app_icon.ico">
+  <!-- Tailwind CSS CDN -->
+  <script src="tailwind.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    }
+    .font-mono-code {
+      font-family: 'Fira Code', Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    }
+    /* Custom Modern Select Dropdown Styling */
+    select.custom-select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234f46e5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 0.85rem center;
+      background-size: 1.1em;
+      padding-right: 2.5rem;
+      cursor: pointer;
+    }
+    select.custom-select option {
+      background-color: #ffffff;
+      color: #1e293b;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* ==================== HIGH CONTRAST DARK MODE STYLES ==================== */
+    html.dark main {
+      background-color: #080c16 !important;
+      color: #f1f5f9 !important;
+    }
+
+    html.dark header {
+      background-color: #0e1424 !important;
+      border-color: #1e293b !important;
+    }
+
+    html.dark #top-title {
+      color: #ffffff !important;
+    }
+
+    html.dark #top-subtitle {
+      color: #94a3b8 !important;
+    }
+
+    /* Main Content Cards in Dark Mode */
+    html.dark .tab-content .bg-white {
+      background-color: #0e1424 !important;
+      border-color: #1e293b !important;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4) !important;
+    }
+
+    /* Text contrast inside cards */
+    html.dark .tab-content h2,
+    html.dark .tab-content h3,
+    html.dark .tab-content h4,
+    html.dark .tab-content .text-slate-900,
+    html.dark .tab-content .text-slate-800 {
+      color: #ffffff !important;
+    }
+
+    html.dark .tab-content p,
+    html.dark .tab-content .text-slate-500,
+    html.dark .tab-content .text-slate-600 {
+      color: #94a3b8 !important;
+    }
+
+    /* Section Step Badges & Form Section Titles */
+    html.dark .tab-content .text-slate-400 {
+      color: #818cf8 !important; /* Bright Indigo Accent */
+    }
+
+    /* File Dropzone Box */
+    html.dark .tab-content .bg-slate-50\/50,
+    html.dark .tab-content .bg-slate-50 {
+      background-color: #131b2e !important;
+      border-color: #334155 !important;
+    }
+
+    html.dark .tab-content .bg-indigo-50 {
+      background-color: #1e1b4b !important;
+      color: #a5b4fc !important;
+    }
+
+    /* Input fields & Dropdowns */
+    html.dark .tab-content input,
+    html.dark .tab-content select,
+    html.dark .tab-content .bg-white\/80 {
+      background-color: #131b2e !important;
+      border-color: #334155 !important;
+      color: #ffffff !important;
+    }
+
+    html.dark .tab-content input::placeholder {
+      color: #64748b !important;
+    }
+
+    /* Custom Dropdown Trigger Buttons */
+    html.dark .tab-content [id$="-btn"] {
+      background-color: #131b2e !important;
+      border-color: #334155 !important;
+      color: #ffffff !important;
+    }
+
+    /* Custom Dropdown Menus */
+    html.dark .tab-content [id$="-menu"] {
+      background-color: #0e1424 !important;
+      border-color: #334155 !important;
+    }
+
+    html.dark .tab-content [id$="-menu"] button {
+      color: #cbd5e1 !important;
+    }
+
+    html.dark .tab-content [id$="-menu"] button:hover {
+      background-color: #1e293b !important;
+      color: #ffffff !important;
+    }
+
+    /* Processing Status Side Card */
+    html.dark .tab-content .bg-white\/90 {
+      background-color: #0e1424 !important;
+      border-color: #1e293b !important;
+    }
+
+    html.dark .tab-content .text-slate-700 {
+      color: #cbd5e1 !important;
+    }
+
+    /* Stat numbers in Status Widget */
+    html.dark .tab-content .font-mono {
+      color: #ffffff !important;
+    }
+
+    /* Tip / Alert Box at bottom of processing status */
+    html.dark .tab-content .bg-indigo-50\/40,
+    html.dark .tab-content .bg-amber-50\/40,
+    html.dark .tab-content .bg-blue-50\/40 {
+      background-color: #131b2e !important;
+      border-color: #312e81 !important;
+      color: #c7d2fe !important;
+    }
+
+    /* Dashboard Tool Cards (5 Cards) */
+    html.dark #tab-dashboard .bg-white {
+      background-color: #0e1424 !important;
+      border-color: #1e293b !important;
+    }
+
+    html.dark #tab-dashboard .bg-white:hover {
+      border-color: #6366f1 !important;
+      box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.25) !important;
+    }
+
+    /* ==================== DYNAMIC INVERTED SIDEBAR THEMES ==================== */
+    /* 1. LIGHT MODE (Light Workspace + DARK Obsidian Sidebar) */
+    html:not(.dark) aside {
+      background-color: #080c16 !important;
+      border-color: #1e293b !important;
+      color: #cbd5e1 !important;
+    }
+    html:not(.dark) aside .border-b,
+    html:not(.dark) aside .border-t {
+      border-color: #1e293b !important;
+    }
+    html:not(.dark) aside h1 {
+      color: #ffffff !important;
+    }
+    html:not(.dark) aside nav button:not(.bg-indigo-600):not(.bg-\[\#5b46f6\]) {
+      color: #cbd5e1 !important;
+    }
+    html:not(.dark) aside nav button:not(.bg-indigo-600):not(.bg-\[\#5b46f6\]):hover {
+      color: #ffffff !important;
+      background-color: #1e293b !important;
+    }
+    html:not(.dark) aside .bg-slate-50 {
+      background-color: #0e1424 !important;
+      border-color: #1e293b !important;
+    }
+    html:not(.dark) aside .text-slate-800 {
+      color: #ffffff !important;
+    }
+    html:not(.dark) aside button[onclick*="openFolderPicker"] {
+      background-color: #080c16 !important;
+      border-color: #1e293b !important;
+      color: #cbd5e1 !important;
+    }
+    html:not(.dark) aside button[onclick*="openFolderPicker"]:hover {
+      background-color: #1e293b !important;
+      color: #ffffff !important;
+    }
+    html:not(.dark) #theme-select-btn {
+      background-color: #0e1424 !important;
+      border-color: #1e293b !important;
+      color: #cbd5e1 !important;
+    }
+    html:not(.dark) #theme-popup-menu {
+      background-color: #0e1424 !important;
+      border-color: #1e293b !important;
+    }
+    html:not(.dark) #theme-popup-menu button {
+      color: #cbd5e1 !important;
+    }
+
+    /* Left & Right Wave String Animations (Matching media_1787823766187.png) */
+    @keyframes leftStringMove {
+      0% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-18px) scale(1.03); }
+      100% { transform: translateY(0px) scale(1); }
+    }
+    @keyframes rightStringMove {
+      0% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(20px) scale(0.97); }
+      100% { transform: translateY(0px) scale(1); }
+    }
+    .animate-left-string {
+      animation: leftStringMove 8s ease-in-out infinite;
+      transform-origin: left center;
+    }
+    .animate-right-string {
+      animation: rightStringMove 10s ease-in-out infinite;
+      transform-origin: right center;
+    }
+    html:not(.dark) #theme-popup-menu button:hover {
+      background-color: #1e293b !important;
+      color: #ffffff !important;
+    }
+
+    /* 2. DARK MODE (Dark Workspace + WHITE Clean Light Sidebar) */
+    html.dark aside {
+      background-color: #ffffff !important;
+      border-color: #e2e8f0 !important;
+      color: #334155 !important;
+    }
+    html.dark aside .border-b,
+    html.dark aside .border-t {
+      border-color: #f1f5f9 !important;
+    }
+    html.dark aside h1 {
+      color: #0f172a !important;
+    }
+    html.dark aside nav button:not(.bg-indigo-600):not(.bg-\[\#5b46f6\]) {
+      color: #475569 !important;
+    }
+    html.dark aside nav button:not(.bg-indigo-600):not(.bg-\[\#5b46f6\]):hover {
+      color: #0f172a !important;
+      background-color: #f1f5f9 !important;
+    }
+    html.dark aside .bg-slate-50 {
+      background-color: #f8fafc !important;
+      border-color: #e2e8f0 !important;
+    }
+    html.dark aside .text-slate-800 {
+      color: #0f172a !important;
+    }
+    html.dark aside button[onclick*="openFolderPicker"] {
+      background-color: #ffffff !important;
+      border-color: #e2e8f0 !important;
+      color: #334155 !important;
+    }
+    html.dark aside button[onclick*="openFolderPicker"]:hover {
+      background-color: #f1f5f9 !important;
+      color: #0f172a !important;
+    }
+    html.dark #theme-select-btn {
+      background-color: #ffffff !important;
+      border-color: #e2e8f0 !important;
+      color: #334155 !important;
+    }
+    html.dark #theme-popup-menu {
+      background-color: #ffffff !important;
+      border-color: #e2e8f0 !important;
+    }
+    html.dark #theme-popup-menu button {
+      color: #334155 !important;
+    }
+    html.dark #theme-popup-menu button:hover {
+      background-color: #f1f5f9 !important;
+      color: #0f172a !important;
+    }
+
+    /* ==================== HERO GRAPHIC PROTECTED STYLES (SAME IN BOTH MODES) ==================== */
+    html.dark .hero-card-back,
+    html:not(.dark) .hero-card-back {
+      background-color: rgba(255, 255, 255, 0.6) !important;
+      border-color: rgba(255, 255, 255, 0.4) !important;
+    }
+
+    html.dark .hero-card-front,
+    html:not(.dark) .hero-card-front {
+      background-color: #ffffff !important;
+      color: #1e293b !important;
+      border-color: rgba(224, 231, 255, 0.5) !important;
+    }
+
+    html.dark .hero-card-fold,
+    html:not(.dark) .hero-card-fold {
+      background-color: #f1f5f9 !important;
+      border-color: #e2e8f0 !important;
+    }
+
+    html.dark .hero-card-badge,
+    html:not(.dark) .hero-card-badge {
+      background: linear-gradient(to right, #9333ea, #4f46e5, #4338ca) !important;
+      color: #ffffff !important;
+      border-color: rgba(192, 132, 252, 0.4) !important;
+    }
+
+    html.dark .hero-line-1,
+    html:not(.dark) .hero-line-1 {
+      background-color: rgba(99, 102, 241, 0.2) !important;
+    }
+
+    html.dark .hero-line-2,
+    html.dark .hero-line-3,
+    html:not(.dark) .hero-line-2,
+    html:not(.dark) .hero-line-3 {
+      background-color: #e2e8f0 !important;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 flex h-screen overflow-hidden">
+
+  <!-- ==================== SIDEBAR (ALWAYS CLEAN WHITE) ==================== -->
+  <aside class="w-64 bg-white text-slate-800 flex flex-col justify-between border-r border-slate-200 shrink-0 z-20">
+    <div>
+      <!-- Brand Logo Header -->
+      <div class="h-16 px-6 flex items-center space-x-3 border-b border-slate-100/10">
+        <div class="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-600/20 font-bold">
+          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-sm font-bold text-slate-900 tracking-wide uppercase">POD TEXT SUITE</h1>
+          <p class="text-[10px] text-slate-400 font-medium">PDF Tool Suite v1.0</p>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="p-4 space-y-1.5">
+        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 bg-indigo-600 text-white shadow-md shadow-indigo-600/20">
+          <svg class="h-5 w-5 text-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+          </svg>
+          <span>Dashboard Overview</span>
+        </button>
+
+        <button onclick="switchTab('align')" id="nav-align" class="w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          <svg class="h-5 w-5 text-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7" />
+          </svg>
+          <span>Align PDF Numbers</span>
+        </button>
+
+        <button onclick="switchTab('border')" id="nav-border" class="w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          <svg class="h-5 w-5 text-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v14a1 1 0 01-1 1H5a1 1 0 01-1-1V5z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 2" d="M8 9a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H9a1 1 0 01-1-1V9z" />
+          </svg>
+          <span>Border PDF Adder</span>
+        </button>
+
+        <button onclick="switchTab('convert')" id="nav-convert" class="w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          <svg class="h-5 w-5 text-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          <span>Convert to 600 DPI</span>
+        </button>
+
+        <button onclick="switchTab('crop')" id="nav-crop" class="w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          <svg class="h-5 w-5 text-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2.5 2.5" d="M3 7V5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2h-6" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14.121 14.121L19 19m-7-7h7m-7 0a9 9 0 11-18 0 9 9 0 0118 0zM7 10a3 3 0 116 0 3 3 0 01-6 0z" />
+          </svg>
+          <span>Crop PDF Engine</span>
+        </button>
+
+        <button onclick="switchTab('resize')" id="nav-resize" class="w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          <svg class="h-5 w-5 text-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 0h-4m4 0l-5 5" />
+          </svg>
+          <span>Resize PDF Template</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Workspace Status & Theme Switcher -->
+    <div class="p-4 border-t border-slate-100 space-y-3">
+      <div class="bg-slate-50 rounded-xl p-3 border border-slate-200/80">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-2 text-xs font-bold text-slate-800">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>POD TEXT TOOL <span class="font-normal text-slate-500">Workspace</span></span>
+          </div>
+          <span class="px-1.5 py-0.5 bg-emerald-100 text-emerald-700 font-medium text-[9px] rounded-md">Active</span>
+        </div>
+        <p id="sidebar-workspace-path" class="text-[10px] text-slate-500 font-mono truncate mt-1.5 font-medium" title="Loading save location...">Loading save location...</p>
+        <button onclick="openWorkspaceModal()" class="w-full mt-2.5 py-1.5 bg-white hover:bg-slate-100 text-slate-700 text-xs font-semibold rounded-lg border border-slate-200 transition-all text-center flex items-center justify-center space-x-1.5 shadow-sm">
+          <svg class="w-3.5 h-3.5 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" /></svg>
+          <span>Change Folder</span>
+        </button>
+      </div>
+
+      <!-- Interactive Theme Selector Dropdown -->
+      <div class="relative">
+        <button onclick="toggleThemeMenu()" id="theme-select-btn" class="w-full border border-slate-200 bg-white rounded-xl px-3 py-2 text-xs text-slate-700 font-medium flex items-center justify-between cursor-pointer hover:bg-slate-50 transition-colors shadow-sm">
+          <div class="flex items-center space-x-2">
+            <span id="theme-btn-icon">
+              <svg class="h-4 w-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+            </span>
+            <span id="theme-btn-text">Light Mode</span>
+          </div>
+          <svg id="theme-menu-arrow" class="h-3.5 w-3.5 text-slate-400 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        <!-- Theme Popup Menu -->
+        <div id="theme-popup-menu" class="hidden absolute bottom-12 left-0 right-0 bg-white border border-slate-200 rounded-xl shadow-2xl overflow-hidden z-50 p-1 space-y-1">
+          <button onclick="setTheme('light')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition-colors">
+            <div class="flex items-center space-x-2">
+              <svg class="h-4 w-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+              <span>Light Mode</span>
+            </div>
+            <span id="theme-check-light" class="text-indigo-600 font-bold">✓</span>
+          </button>
+
+          <button onclick="setTheme('dark')" class="w-full flex items-center justify-between px-3 py-2 text-xs font-medium text-slate-700 hover:bg-slate-100 rounded-lg transition-colors">
+            <div class="flex items-center space-x-2">
+              <svg class="h-4 w-4 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+              <span>Dark Mode</span>
+            </div>
+            <span id="theme-check-dark" class="text-indigo-600 font-bold hidden">✓</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ==================== MAIN CONTENT AREA ==================== -->
+  <main class="flex-1 flex flex-col h-screen overflow-y-auto bg-slate-50">
+    <!-- Top Header Bar -->
+    <header class="h-16 bg-white border-b border-slate-200 px-8 flex items-center justify-between shrink-0 sticky top-0 z-30 shadow-sm">
+      <div>
+        <h2 id="top-title" class="text-xl font-bold text-slate-900">Dashboard Overview</h2>
+        <p id="top-subtitle" class="text-xs text-slate-500 font-medium">Welcome back! Choose a tool to get started.</p>
+      </div>
+
+      <!-- User Profile / Login Header Button -->
+      <div class="relative">
+        <button type="button" onclick="toggleUserProfileMenu()" id="user-profile-btn" class="flex items-center space-x-2.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-full py-1.5 px-3 text-xs font-semibold text-slate-800 transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20">
+          <div class="relative w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-[11px] shrink-0">
+            <span id="user-initial-icon">A</span>
+            <span class="absolute bottom-0 right-0 w-2 h-2 bg-emerald-500 border border-white rounded-full"></span>
+          </div>
+          <span id="header-user-name" class="font-bold text-slate-800">Admin User</span>
+          <svg id="user-profile-arrow" class="w-3.5 h-3.5 text-slate-400 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        <!-- User Profile Floating Dropdown Menu -->
+        <div id="user-profile-menu" class="hidden absolute right-0 mt-2 w-56 bg-white border border-slate-200 rounded-2xl shadow-2xl py-2 text-xs z-50 divide-y divide-slate-100">
+          <div class="px-4 py-2.5 flex items-center justify-between">
+            <p class="font-bold text-slate-900" id="menu-user-fullname">Admin</p>
+            <span class="inline-flex items-center space-x-1 px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 text-[10px] font-bold border border-emerald-200">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              <span>ACTIVE</span>
+            </span>
+          </div>
+          <div class="py-1">
+            <button onclick="handleUserLogout()" class="w-full px-4 py-2 text-left hover:bg-rose-50 text-rose-600 font-semibold flex items-center space-x-2 transition-colors">
+              <svg class="w-4 h-4 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+              <span>Sign Out</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- App Container -->
+    <div class="p-4 md:p-6 max-w-7xl w-full mx-auto space-y-4 flex-1">
+
+      <!-- ==================== DASHBOARD OVERVIEW TAB ==================== -->
+      <section id="tab-dashboard" class="tab-content space-y-4">
+        <!-- Hero Welcome Banner (Compact 100% Fit Height) -->
+        <div class="relative overflow-hidden rounded-2xl bg-[#473dd3] text-white p-5 md:p-6 shadow-lg shadow-indigo-600/10 flex items-center justify-between min-h-[135px]">
+          <!-- Left 4K-Sharp Crisp HTML Text -->
+          <div class="relative z-10 max-w-xl space-y-1.5">
+            <h3 class="text-xl md:text-2xl font-extrabold tracking-tight text-white">Welcome to POD PDF Editor Suite</h3>
+            <p class="text-xs text-indigo-100/90 leading-relaxed font-normal">
+              Optimize and format PDF books/documents for print-on-demand services.<br>
+              Navigate through tools on the sidebar to get started.
+            </p>
+          </div>
+
+          <!-- Right 100% Native HTML/CSS Vector 3D PDF Graphic (Compact Vector Stack) -->
+          <div class="relative z-10 hidden md:flex items-center justify-center shrink-0 ml-6 pr-4 group cursor-pointer">
+            <!-- Back PDF Page (Translucent Glassmorphism White Card) -->
+            <div style="background-color: rgba(255, 255, 255, 0.6) !important; border-color: rgba(255, 255, 255, 0.4) !important;" class="hero-card-back absolute backdrop-blur-md shadow-md rounded-xl w-28 h-34 transform translate-x-3 -translate-y-1.5 rotate-12 border group-hover:rotate-14 group-hover:translate-x-4 transition-transform duration-300">
+              <div class="p-2.5 pt-3 space-y-1.5">
+                <div style="background-color: rgba(203, 213, 225, 0.7) !important;" class="w-10 h-1 rounded"></div>
+                <div style="background-color: rgba(226, 232, 240, 0.7) !important;" class="w-16 h-1 rounded"></div>
+              </div>
+            </div>
+
+            <!-- Front Main White PDF Document Card -->
+            <div style="background-color: #ffffff !important; color: #1e293b !important; border-color: rgba(224, 231, 255, 0.5) !important;" class="hero-card-front relative rounded-xl w-28 h-34 shadow-xl flex flex-col justify-between p-3 border transform transition-all duration-300 group-hover:scale-105 group-hover:-translate-y-1.5">
+              <!-- Top Right Corner Fold -->
+              <div style="background-color: #f1f5f9 !important; border-color: #e2e8f0 !important;" class="hero-card-fold absolute top-0 right-0 w-5 h-5 rounded-bl-lg shadow-inner border-b border-l"></div>
+
+              <!-- Floating Vibrant Purple PDF Badge -->
+              <div style="background: linear-gradient(to right, #9333ea, #4f46e5, #4338ca) !important; color: #ffffff !important; border-color: rgba(192, 132, 252, 0.4) !important;" class="hero-card-badge absolute -left-3 top-10 text-[10px] font-black px-2.5 py-1 rounded-lg shadow-md uppercase tracking-wider border transform transition-transform duration-300 group-hover:scale-110">
+                PDF
+              </div>
+
+              <!-- Vector Document Lines & Icon -->
+              <div class="mt-10 space-y-1.5">
+                <div style="background-color: rgba(99, 102, 241, 0.2) !important;" class="w-12 h-1.5 rounded-full"></div>
+                <div style="background-color: #e2e8f0 !important;" class="w-18 h-1 rounded-full"></div>
+                <div style="background-color: #e2e8f0 !important;" class="w-14 h-1 rounded-full"></div>
+              </div>
+
+              <div class="flex justify-end">
+                <svg class="h-3.5 w-3.5 text-indigo-400 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5 Tool Cards Grid (Single Uniform 3-Column Grid for All Cards) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Card 1: Align PDF Numbers -->
+          <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-3">
+            <div class="space-y-2">
+              <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7" />
+                </svg>
+              </div>
+              <h4 class="text-sm font-bold text-slate-900">Align PDF Numbers</h4>
+              <p class="text-xs text-slate-500 leading-snug">Detect and lock page numbers dynamically across all 6 layout zones for extreme consistency.</p>
+            </div>
+            <button onclick="switchTab('align')" class="inline-flex items-center space-x-1.5 text-xs font-bold text-indigo-600 bg-indigo-50/70 hover:bg-indigo-100 border border-indigo-100 px-3.5 py-1.5 rounded-lg transition-colors w-fit">
+              <span>Launch Tool</span>
+              <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+          </div>
+
+          <!-- Card 2: Border PDF Adder -->
+          <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-3">
+            <div class="space-y-2">
+              <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v14a1 1 0 01-1 1H5a1 1 0 01-1-1V5z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 2" d="M8 9a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H9a1 1 0 01-1-1V9z" />
+                </svg>
+              </div>
+              <h4 class="text-sm font-bold text-slate-900">Border PDF Adder</h4>
+              <p class="text-xs text-slate-500 leading-snug">Apply exact margins in millimeters to PDF pages without losing structural document metadata.</p>
+            </div>
+            <button onclick="switchTab('border')" class="inline-flex items-center space-x-1.5 text-xs font-bold text-indigo-600 bg-indigo-50/70 hover:bg-indigo-100 border border-indigo-100 px-3.5 py-1.5 rounded-lg transition-colors w-fit">
+              <span>Launch Tool</span>
+              <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+          </div>
+
+          <!-- Card 3: Convert to 600 DPI -->
+          <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-3">
+            <div class="space-y-2">
+              <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+              </div>
+              <h4 class="text-sm font-bold text-slate-900">Convert to 600 DPI</h4>
+              <p class="text-xs text-slate-500 leading-snug">Re-render PDF pages to print-ready 600 DPI, automatically filtering modes to grayscale/bitmap.</p>
+            </div>
+            <button onclick="switchTab('convert')" class="inline-flex items-center space-x-1.5 text-xs font-bold text-indigo-600 bg-indigo-50/70 hover:bg-indigo-100 border border-indigo-100 px-3.5 py-1.5 rounded-lg transition-colors w-fit">
+              <span>Launch Tool</span>
+              <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+          </div>
+
+          <!-- Card 4: Crop PDF Engine -->
+          <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-3">
+            <div class="space-y-2">
+              <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2.5 2.5" d="M3 7V5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2h-6" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.121 14.121L19 19m-7-7h7m-7 0a9 9 0 11-18 0 9 9 0 0118 0zM7 10a3 3 0 116 0 3 3 0 01-6 0z" />
+                </svg>
+              </div>
+              <h4 class="text-sm font-bold text-slate-900">Crop PDF Engine</h4>
+              <p class="text-xs text-slate-500 leading-snug">Detect real ink boxes, reject scanner binding lines, erase dust spots, and crop to tight limits.</p>
+            </div>
+            <button onclick="switchTab('crop')" class="inline-flex items-center space-x-1.5 text-xs font-bold text-indigo-600 bg-indigo-50/70 hover:bg-indigo-100 border border-indigo-100 px-3.5 py-1.5 rounded-lg transition-colors w-fit">
+              <span>Launch Tool</span>
+              <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+          </div>
+
+          <!-- Card 5: Resize PDF Template -->
+          <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-3">
+            <div class="space-y-2">
+              <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 0h-4m4 0l-5 5" />
+                </svg>
+              </div>
+              <h4 class="text-sm font-bold text-slate-900">Resize PDF Template</h4>
+              <p class="text-xs text-slate-500 leading-snug">Enforce layout standard dimensions (A5, Royal, Crown, A4) with quick template selection.</p>
+            </div>
+            <button onclick="switchTab('resize')" class="inline-flex items-center space-x-1.5 text-xs font-bold text-indigo-600 bg-indigo-50/70 hover:bg-indigo-100 border border-indigo-100 px-3.5 py-1.5 rounded-lg transition-colors w-fit">
+              <span>Launch Tool</span>
+              <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ==================== ALIGN PDF NUMBERS TAB ==================== -->
+      <section id="tab-align" class="tab-content hidden space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-6">
+            <!-- Step 1: Select File Card -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+              <div class="flex items-center space-x-3 mb-4">
+                <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold flex items-center justify-center">1</span>
+                <h3 class="text-base font-bold text-slate-900">Select PDF File</h3>
+              </div>
+
+              <div class="drag-drop-zone border-2 border-dashed border-slate-200 hover:border-indigo-500 rounded-2xl p-8 text-center cursor-pointer transition-colors duration-200 bg-slate-50/50" onclick="triggerFileInput('align-file-input')" ondragover="dragOverHandler(event)" ondragleave="dragLeaveHandler(event)" ondrop="dropHandler(event, 'align-file-info', 'align-file-input')">
+                <input type="file" id="align-file-input" class="hidden" accept=".pdf" onchange="fileSelectedHandler(this, 'align-file-info')">
+                <div class="w-12 h-12 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto mb-3">
+                  <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                  </svg>
+                </div>
+
+              <div id="align-file-info" class="mt-4 hidden bg-indigo-50/50 border border-indigo-100 rounded-xl p-3 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                  <div class="w-9 h-9 rounded-lg bg-red-500 text-white flex items-center justify-center font-bold text-xs">PDF</div>
+                  <div>
+                    <p class="text-sm font-semibold text-slate-800 file-name-text">filename.pdf</p>
+                    <p class="text-xs text-slate-500 file-size-text">0.0 MB</p>
+                  </div>
+                </div>
+                <button onclick="clearFileInfo('align-file-info', 'align-file-input')" class="text-slate-400 hover:text-red-500 p-1.5 rounded-lg hover:bg-slate-100 transition-colors">
+                  <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+              </div>
+
+              <div id="align-file-error" class="mt-3 hidden bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-xl text-sm font-semibold flex items-center justify-between shadow-sm transition-all duration-200">
+                <div class="flex items-center space-x-2.5">
+                  <svg class="w-5 h-5 text-rose-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                  </svg>
+                  <span class="file-error-text">Please select a PDF file first.</span>
+                </div>
+                <button type="button" onclick="hideFileError('align')" class="text-rose-400 hover:text-rose-600 p-1 rounded-lg hover:bg-rose-100 transition-colors">
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col items-center">
+              <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 w-full text-left">Processing Controls</h4>
+              
+              <div id="align-run-btn-container" class="w-full">
+                <button onclick="runToolMock('align', 'align_pdf.py')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-xl shadow-none hover:shadow-lg hover:shadow-indigo-500/40 active:scale-[0.98] transition-all duration-200 flex items-center justify-center space-x-2">
+                  <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                  <span>Run Align Tool</span>
+                </button>
+              </div>
+
+              <!-- Execution Controls -->
+              <div id="align-controls-container" class="hidden w-full space-y-2.5">
+                <div class="grid grid-cols-2 gap-2">
+                  <button onclick="pauseResumeTool('align')" id="align-pause-btn" class="w-full bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold py-2.5 px-3 rounded-xl shadow-sm transition-all flex items-center justify-center space-x-1.5">
+                    <span id="align-pause-text">Pause</span>
+                  </button>
+                  <button onclick="stopTool('align')" class="w-full bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold py-2.5 px-3 rounded-xl shadow-sm transition-all flex items-center justify-center space-x-1.5">
+                    <span>Stop</span>
+                  </button>
+                </div>
+                <button onclick="resetTool('align')" class="w-full bg-slate-700 hover:bg-slate-800 text-slate-200 text-xs font-semibold py-2.5 px-3 rounded-xl transition-all flex items-center justify-center space-x-1.5">
+                  <span>Reset Tool</span>
+                </button>
+              </div>
+              <span class="text-xs text-slate-400 mt-3 text-center">Aligns page numbers across all PDF pages</span>
+            </div>
+
+            <!-- Processing Status Widget -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2 text-xs font-bold text-indigo-600">
+                  <svg class="h-4 w-4 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                  <span>Processing Status</span>
+                </div>
+                <span id="align-widget-percent" class="text-xl font-bold font-mono text-indigo-600">0%</span>
+              </div>
+
+              <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                <div id="align-widget-bar" class="bg-indigo-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+              </div>
+
+              <div class="space-y-2 text-xs divide-y divide-slate-100 pt-1">
+                <div class="flex justify-between py-1.5 text-slate-600"><span>Total Pages</span><span id="align-stat-total" class="font-bold font-mono text-slate-900">0</span></div>
+                <div class="flex justify-between py-1.5 text-slate-600"><span>Processed</span><span id="align-stat-processed" class="font-bold font-mono text-slate-900">0</span></div>
+                <div class="flex justify-between py-1.5 text-slate-600"><span>Remaining</span><span id="align-stat-remaining" class="font-bold font-mono text-slate-900">0</span></div>
+                <div class="flex justify-between py-1.5 text-slate-600"><span>Elapsed Time</span><span id="align-stat-elapsed" class="font-bold font-mono text-slate-900">00:00:00</span></div>
+              </div>
+
+              <div class="bg-indigo-50/60 border border-indigo-100 rounded-xl p-3 text-[11px] text-indigo-800 flex items-start space-x-2">
+                <span class="text-indigo-500">💡</span>
+                <span>Ensure the page numbers are placed within standard header/footer bounds for best alignment accuracy.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Full-Width Progress Panel with Donut Ring & Stepper -->
+        <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-8 space-y-6">
+          <div class="flex items-center space-x-6">
+            <!-- Circular Donut SVG Ring -->
+            <div class="relative w-20 h-20 flex items-center justify-center shrink-0">
+              <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                <path class="text-slate-100" stroke-width="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                <path id="align-donut-ring" class="text-indigo-600 transition-all duration-300" stroke-dasharray="0, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+              </svg>
+              <span id="align-donut-text" class="absolute text-sm font-bold font-mono text-indigo-700">0%</span>
+            </div>
+
+            <div class="flex-1 space-y-2">
+              <h4 id="align-bottom-title" class="text-base font-bold text-slate-900">Processing Document...</h4>
+              <p id="align-bottom-status" class="text-xs text-slate-500 font-mono">Uploading & initializing PDF stream...</p>
+              
+              <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden border border-slate-200/80">
+                <div id="align-bottom-bar" class="bg-indigo-600 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stepper Timeline -->
+          <div class="pt-4 border-t border-slate-100">
+            <div class="flex items-center justify-between text-xs font-semibold text-slate-400 max-w-2xl mx-auto">
+              <div id="align-step-1" class="flex flex-col items-center space-y-1 text-indigo-600 font-semibold">
+                <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[10px]">✓</span>
+                <span>Uploading</span>
+              </div>
+              <div id="align-line-1" class="flex-1 h-0.5 bg-slate-200 mx-2 transition-colors duration-300"></div>
+              <div id="align-step-2" class="flex flex-col items-center space-y-1">
+                <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-[10px]">2</span>
+                <span>Analyzing</span>
+              </div>
+              <div id="align-line-2" class="flex-1 h-0.5 bg-slate-200 mx-2 transition-colors duration-300"></div>
+              <div id="align-step-3" class="flex flex-col items-center space-y-1">
+                <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-[10px]">3</span>
+                <span>Aligning Numbers</span>
+              </div>
+              <div id="align-line-3" class="flex-1 h-0.5 bg-slate-200 mx-2 transition-colors duration-300"></div>
+              <div id="align-step-4" class="flex flex-col items-center space-y-1">
+                <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-[10px]">4</span>
+                <span>Completed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== BORDER PDF ADDER TAB ==================== -->
+      <section id="tab-border" class="tab-content hidden space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-6">
+            <!-- Step 1 Card -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+              <div class="flex items-center space-x-3 mb-4">
+                <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold flex items-center justify-center">1</span>
+                <h3 class="text-base font-bold text-slate-900">Select PDF File</h3>
+              </div>
+
+              <div class="drag-drop-zone border-2 border-dashed border-slate-200 hover:border-indigo-500 rounded-2xl p-8 text-center cursor-pointer transition-colors duration-200 bg-slate-50/50" onclick="triggerFileInput('border-file-input')" ondragover="dragOverHandler(event)" ondragleave="dragLeaveHandler(event)" ondrop="dropHandler(event, 'border-file-info', 'border-file-input')">
+                <input type="file" id="border-file-input" class="hidden" accept=".pdf" onchange="fileSelectedHandler(this, 'border-file-info')">
+                <div class="w-12 h-12 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto mb-3">
+                  <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
+                </div>
+
+              <div id="border-file-info" class="mt-4 hidden bg-indigo-50/50 border border-indigo-100 rounded-xl p-3 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                  <div class="w-9 h-9 rounded-lg bg-red-500 text-white flex items-center justify-center font-bold text-xs">PDF</div>
+                  <div>
+                    <p class="text-sm font-semibold text-slate-800 file-name-text">filename.pdf</p>
+                    <p class="text-xs text-slate-500 file-size-text">0.0 MB</p>
+                  </div>
+                </div>
+                <button onclick="clearFileInfo('border-file-info', 'border-file-input')" class="text-slate-400 hover:text-red-500 p-1.5 rounded-lg hover:bg-slate-100 transition-colors">
+                  <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+              </div>
+
+              <div id="border-file-error" class="mt-3 hidden bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-xl text-sm font-semibold flex items-center justify-between shadow-sm transition-all duration-200">
+                <div class="flex items-center space-x-2.5">
+                  <svg class="w-5 h-5 text-rose-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                  </svg>
+                  <span class="file-error-text">Please select a PDF file first.</span>
+                </div>
+                <button type="button" onclick="hideFileError('border')" class="text-rose-400 hover:text-rose-600 p-1 rounded-lg hover:bg-rose-100 transition-colors">
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col items-center">
+              <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 w-full text-left">Processing Controls</h4>
+              <div id="border-run-btn-container" class="w-full">
+                <button onclick="runToolMock('border', 'border_pdf.py')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-xl shadow-none hover:shadow-lg hover:shadow-indigo-500/40 active:scale-[0.98] transition-all flex items-center justify-center space-x-2">
+                  <svg class="h-5 w-5 text-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v14a1 1 0 01-1 1H5a1 1 0 01-1-1V5z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 2" d="M8 9a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H9a1 1 0 01-1-1V9z" />
+                  </svg>
+                  <span>Run Border Tool</span>
+                </button>
+              </div>
+              <div id="border-controls-container" class="hidden w-full space-y-2.5">
+                <div class="grid grid-cols-2 gap-2">
+                  <button onclick="pauseResumeTool('border')" id="border-pause-btn" class="w-full bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold py-2.5 px-3 rounded-xl shadow-sm"><span id="border-pause-text">Pause</span></button>
+                  <button onclick="stopTool('border')" class="w-full bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold py-2.5 px-3 rounded-xl shadow-sm"><span>Stop</span></button>
+                </div>
+                <button onclick="resetTool('border')" class="w-full bg-slate-700 hover:bg-slate-800 text-slate-200 text-xs font-semibold py-2.5 px-3 rounded-xl"><span>Reset Tool</span></button>
+              </div>
+              <span class="text-xs text-slate-400 mt-3 text-center">Applies custom millimeter margin borders</span>
+            </div>
+
+            <!-- Stats Widget -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2 text-xs font-bold text-indigo-600">
+                  <svg class="h-4 w-4 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                  <span>Processing Status</span>
+                </div>
+                <span id="border-widget-percent" class="text-xl font-bold font-mono text-indigo-600">0%</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                <div id="border-widget-bar" class="bg-indigo-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+              </div>
+              <div class="space-y-2 text-xs divide-y divide-slate-100 pt-1">
+                <div class="flex justify-between py-1.5 text-slate-600"><span>Total Pages</span><span id="border-stat-total" class="font-bold font-mono text-slate-900">0</span></div>
+                <div class="flex justify-between py-1.5 text-slate-600"><span>Processed</span><span id="border-stat-processed" class="font-bold font-mono text-slate-900">0</span></div>
+                <div class="flex justify-between py-1.5 text-slate-600"><span>Remaining</span><span id="border-stat-remaining" class="font-bold font-mono text-slate-900">0</span></div>
+                <div class="flex justify-between py-1.5 text-slate-600"><span>Elapsed Time</span><span id="border-stat-elapsed" class="font-bold font-mono text-slate-900">00:00:00</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Donut Panel -->
+        <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-8 space-y-6">
+          <div class="flex items-center space-x-6">
+            <div class="relative w-20 h-20 flex items-center justify-center shrink-0">
+              <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                <path class="text-slate-100" stroke-width="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                <path id="border-donut-ring" class="text-indigo-600 transition-all duration-300" stroke-dasharray="0, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+              </svg>
+              <span id="border-donut-text" class="absolute text-sm font-bold font-mono text-indigo-700">0%</span>
+            </div>
+
+            <div class="flex-1 space-y-2">
+              <h4 id="border-bottom-title" class="text-base font-bold text-slate-900">Processing Document...</h4>
+              <p id="border-bottom-status" class="text-xs text-slate-500 font-mono">Applying margin borders...</p>
+              <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden border border-slate-200">
+                <div id="border-bottom-bar" class="bg-indigo-600 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stepper Timeline -->
+          <div class="pt-4 border-t border-slate-100">
+            <div class="flex items-center justify-between text-xs font-semibold text-slate-400 max-w-2xl mx-auto">
+              <div id="border-step-1" class="flex flex-col items-center space-y-1 text-indigo-600 font-semibold">
+                <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[10px]">✓</span>
+                <span>Uploading</span>
+              </div>
+              <div id="border-line-1" class="flex-1 h-0.5 bg-slate-200 mx-2 transition-colors duration-300"></div>
+              <div id="border-step-2" class="flex flex-col items-center space-y-1">
+                <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-[10px]">2</span>
+                <span>Initializing</span>
+              </div>
+              <div id="border-line-2" class="flex-1 h-0.5 bg-slate-200 mx-2 transition-colors duration-300"></div>
+              <div id="border-step-3" class="flex flex-col items-center space-y-1">
+                <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-[10px]">3</span>
+                <span>Adding Borders</span>
+              </div>
+              <div id="border-line-3" class="flex-1 h-0.5 bg-slate-200 mx-2 transition-colors duration-300"></div>
+              <div id="border-step-4" class="flex flex-col items-center space-y-1">
+                <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-[10px]">4</span>
+                <span>Completed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== CONVERT TO 600 DPI TAB ==================== -->
+      <section id="tab-convert" class="tab-content hidden space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-6">
+            <!-- Step 1 Card -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+              <div class="flex items-center space-x-3 mb-4">
+                <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold flex items-center justify-center">1</span>
+                <h3 class="text-base font-bold text-slate-900">Select PDF File</h3>
+              </div>
+
+              <div class="drag-drop-zone border-2 border-dashed border-slate-200 hover:border-indigo-500 rounded-2xl p-8 text-center cursor-pointer transition-colors duration-200 bg-slate-50/50" onclick="triggerFileInput('convert-file-input')" ondragover="dragOverHandler(event)" ondragleave="dragLeaveHandler(event)" ondrop="dropHandler(event, 'convert-file-info', 'convert-file-input')">
+                <input type="file" id="convert-file-input" class="hidden" accept=".pdf" onchange="fileSelectedHandler(this, 'convert-file-info')">
+                <div class="w-12 h-12 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto mb-3">
+                  <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
+                </div>
+
+              <div id="convert-file-info" class="mt-4 hidden bg-indigo-50/50 border border-indigo-100 rounded-xl p-3 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                  <div class="w-9 h-9 rounded-lg bg-red-500 text-white flex items-center justify-center font-bold text-xs">PDF</div>
+                  <div>
+                    <p class="text-sm font-semibold text-slate-800 file-name-text">filename.pdf</p>
+                    <p class="text-xs text-slate-500 file-size-text">0.0 MB</p>
+                  </div>
+                </div>
+                <button onclick="clearFileInfo('convert-file-info', 'convert-file-input')" class="text-slate-400 hover:text-red-500 p-1.5 rounded-lg hover:bg-slate-100 transition-colors">
+                  <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+              </div>
+
+              <div id="convert-file-error" class="mt-3 hidden bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-xl text-sm font-semibold flex items-center justify-between shadow-sm transition-all duration-200">
+                <div class="flex items-center space-x-2.5">
+                  <svg class="w-5 h-5 text-rose-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                  </svg>
+                  <span class="file-error-text">Please select a PDF file first.</span>
+                </div>
+                <button type="button" onclick="hideFileError('convert')" class="text-rose-400 hover:text-rose-600 p-1 rounded-lg hover:bg-rose-100 transition-colors">
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col items-center">
+              <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 w-full text-left">Processing Controls</h4>
+              <div id="convert-run-btn-container" class="w-full">
+                <button onclick="runToolMock('convert', 'convert_600dpi.py')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-xl shadow-none hover:shadow-lg hover:shadow-indigo-500/40 active:scale-[0.98] transition-all flex items-center justify-center space-x-2">
+                  <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+                  <span>Run Converter</span>
+                </button>
+              </div>
+              <div id="convert-controls-container" class="hidden w-full space-y-2.5">
+                <div class="grid grid-cols-2 gap-2">
+                  <button onclick="pauseResumeTool('convert')" id="convert-pause-btn" class="w-full bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold py-2.5 px-3 rounded-xl shadow-sm"><span id="convert-pause-text">Pause</span></button>
+                  <button onclick="stopTool('convert')" class="w-full bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold py-2.5 px-3 rounded-xl shadow-sm"><span>Stop</span></button>
+                </div>
+                <button onclick="resetTool('convert')" class="w-full bg-slate-700 hover:bg-slate-800 text-slate-200 text-xs font-semibold py-2.5 px-3 rounded-xl"><span>Reset Tool</span></button>
+              </div>
+              <span class="text-xs text-slate-400 mt-3 text-center">Re-renders pages to high-resolution 600 DPI</span>
+            </div>
+
+            <!-- Stats Widget -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2 text-xs font-bold text-indigo-600">
+                  <svg class="h-4 w-4 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                  <span>Processing Status</span>
+                </div>
+                <span id="convert-widget-percent" class="text-xl font-bold font-mono text-indigo-600">0%</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                <div id="convert-widget-bar" class="bg-indigo-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+              </div>
+              <div class="space-y-2 text-xs divide-y divide-slate-100 pt-1">
+                <div class="flex justify-between py-1.5 text-slate-600"><span>Total Pages</span><span id="convert-stat-total" class="font-bold font-mono text-slate-900">0</span></div>
+                <div class="flex justify-between py-1.5 text-slate-600"><span>Processed</span><span id="convert-stat-processed" class="font-bold font-mono text-slate-900">0</span></div>
+                <div class="flex justify-between py-1.5 text-slate-600"><span>Remaining</span><span id="convert-stat-remaining" class="font-bold font-mono text-slate-900">0</span></div>
+                <div class="flex justify-between py-1.5 text-slate-600"><span>Elapsed Time</span><span id="convert-stat-elapsed" class="font-bold font-mono text-slate-900">00:00:00</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Donut Panel -->
+        <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-8 space-y-6">
+          <div class="flex items-center space-x-6">
+            <div class="relative w-20 h-20 flex items-center justify-center shrink-0">
+              <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                <path class="text-slate-100" stroke-width="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                <path id="convert-donut-ring" class="text-indigo-600 transition-all duration-300" stroke-dasharray="0, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+              </svg>
+              <span id="convert-donut-text" class="absolute text-sm font-bold font-mono text-indigo-700">0%</span>
+            </div>
+
+            <div class="flex-1 space-y-2">
+              <h4 id="convert-bottom-title" class="text-base font-bold text-slate-900">Processing Document...</h4>
+              <p id="convert-bottom-status" class="text-xs text-slate-500 font-mono">Rendering pages at 600 DPI...</p>
+              <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden border border-slate-200">
+                <div id="convert-bottom-bar" class="bg-indigo-600 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stepper Timeline -->
+          <div class="pt-4 border-t border-slate-100">
+            <div class="flex items-center justify-between text-xs font-semibold text-slate-400 max-w-2xl mx-auto">
+              <div id="convert-step-1" class="flex flex-col items-center space-y-1 text-indigo-600 font-semibold">
+                <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[10px]">✓</span>
+                <span>Uploading</span>
+              </div>
+              <div id="convert-line-1" class="flex-1 h-0.5 bg-slate-200 mx-2 transition-colors duration-300"></div>
+              <div id="convert-step-2" class="flex flex-col items-center space-y-1">
+                <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-[10px]">2</span>
+                <span>Initializing</span>
+              </div>
+              <div id="convert-line-2" class="flex-1 h-0.5 bg-slate-200 mx-2 transition-colors duration-300"></div>
+              <div id="convert-step-3" class="flex flex-col items-center space-y-1">
+                <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-[10px]">3</span>
+                <span>Converting Pages</span>
+              </div>
+              <div id="convert-line-3" class="flex-1 h-0.5 bg-slate-200 mx-2 transition-colors duration-300"></div>
+              <div id="convert-step-4" class="flex flex-col items-center space-y-1">
+                <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-[10px]">4</span>
+                <span>Completed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== CROP PDF ENGINE TAB ==================== -->
+      <section id="tab-crop" class="tab-content hidden space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-6">
+            <!-- Step 1 Card -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+              <div class="flex items-center space-x-3 mb-4">
+                <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold flex items-center justify-center">1</span>
+                <h3 class="text-base font-bold text-slate-900">Select PDF File</h3>
+              </div>
+
+              <div class="drag-drop-zone border-2 border-dashed border-slate-200 hover:border-indigo-500 rounded-2xl p-8 text-center cursor-pointer transition-colors duration-200 bg-slate-50/50" onclick="triggerFileInput('crop-file-input')" ondragover="dragOverHandler(event)" ondragleave="dragLeaveHandler(event)" ondrop="dropHandler(event, 'crop-file-info', 'crop-file-input')">
+                <input type="file" id="crop-file-input" class="hidden" accept=".pdf" onchange="fileSelectedHandler(this, 'crop-file-info')">
+                <div class="w-12 h-12 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto mb-3">
+                  <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
+                </div>
+
+              <div id="crop-file-info" class="mt-4 hidden bg-indigo-50/50 border border-indigo-100 rounded-xl p-3 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                  <div class="w-9 h-9 rounded-lg bg-red-500 text-white flex items-center justify-center font-bold text-xs">PDF</div>
+                  <div>
+                    <p class="text-sm font-semibold text-slate-800 file-name-text">filename.pdf</p>
+                    <p class="text-xs text-slate-500 file-size-text">0.0 MB</p>
+                  </div>
+                </div>
+                <button onclick="clearFileInfo('crop-file-info', 'crop-file-input')" class="text-slate-400 hover:text-red-500 p-1.5 rounded-lg hover:bg-slate-100 transition-colors">
+                  <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+              </div>
+
+              <div id="crop-file-error" class="mt-3 hidden bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-xl text-sm font-semibold flex items-center justify-between shadow-sm transition-all duration-200">
+                <div class="flex items-center space-x-2.5">
+                  <svg class="w-5 h-5 text-rose-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                  </svg>
+                  <span class="file-error-text">Please select a PDF file first.</span>
+                </div>
+                <button type="button" onclick="hideFileError('crop')" class="text-rose-400 hover:text-rose-600 p-1 rounded-lg hover:bg-rose-100 transition-colors">
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col items-center">
+              <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 w-full text-left">Processing Controls</h4>
+              <div id="crop-run-btn-container" class="w-full">
+                <button onclick="runToolMock('crop', 'pdf_crop_engine.py')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-xl shadow-none hover:shadow-lg hover:shadow-indigo-500/40 active:scale-[0.98] transition-all flex items-center justify-center space-x-2">
+                  <svg class="h-5 w-5 text-current" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2.5 2.5" d="M3 7V5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2h-6" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.121 14.121L19 19m-7-7h7m-7 0a9 9 0 11-18 0 9 9 0 0118 0zM7 10a3 3 0 116 0 3 3 0 01-6 0z" />
+                  </svg>
+                  <span>Run Crop Engine</span>
+                </button>
+              </div>
+              <div id="crop-controls-container" class="hidden w-full space-y-2.5">
+                <div class="grid grid-cols-2 gap-2">
+                  <button onclick="pauseResumeTool('crop')" id="crop-pause-btn" class="w-full bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold py-2.5 px-3 rounded-xl shadow-sm"><span id="crop-pause-text">Pause</span></button>
+                  <button onclick="stopTool('crop')" class="w-full bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold py-2.5 px-3 rounded-xl shadow-sm"><span>Stop</span></button>
+                </div>
+                <button onclick="resetTool('crop')" class="w-full bg-slate-700 hover:bg-slate-800 text-slate-200 text-xs font-semibold py-2.5 px-3 rounded-xl"><span>Reset Tool</span></button>
+              </div>
+              <span class="text-xs text-slate-400 mt-3 text-center">Crops margins & removes scanner edge lines</span>
+            </div>
+
+            <!-- Stats Widget -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2 text-xs font-bold text-indigo-600">
+                  <svg class="h-4 w-4 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                  <span>Processing Status</span>
+                </div>
+                <span id="crop-widget-percent" class="text-xl font-bold font-mono text-indigo-600">0%</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                <div id="crop-widget-bar" class="bg-indigo-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+              </div>
+              <div class="space-y-2 text-xs divide-y divide-slate-100 pt-1">
+                <div class="flex justify-between py-1.5 text-slate-600"><span>Total Pages</span><span id="crop-stat-total" class="font-bold font-mono text-slate-900">0</span></div>
+                <div class="flex justify-between py-1.5 text-slate-600"><span>Processed</span><span id="crop-stat-processed" class="font-bold font-mono text-slate-900">0</span></div>
+                <div class="flex justify-between py-1.5 text-slate-600"><span>Remaining</span><span id="crop-stat-remaining" class="font-bold font-mono text-slate-900">0</span></div>
+                <div class="flex justify-between py-1.5 text-slate-600"><span>Elapsed Time</span><span id="crop-stat-elapsed" class="font-bold font-mono text-slate-900">00:00:00</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Donut Panel -->
+        <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-8 space-y-6">
+          <div class="flex items-center space-x-6">
+            <div class="relative w-20 h-20 flex items-center justify-center shrink-0">
+              <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                <path class="text-slate-100" stroke-width="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                <path id="crop-donut-ring" class="text-indigo-600 transition-all duration-300" stroke-dasharray="0, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+              </svg>
+              <span id="crop-donut-text" class="absolute text-sm font-bold font-mono text-indigo-700">0%</span>
+            </div>
+
+            <div class="flex-1 space-y-2">
+              <h4 id="crop-bottom-title" class="text-base font-bold text-slate-900">Processing Document...</h4>
+              <p id="crop-bottom-status" class="text-xs text-slate-500 font-mono">Cropping margins & detecting real ink bounds...</p>
+              <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden border border-slate-200">
+                <div id="crop-bottom-bar" class="bg-indigo-600 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stepper Timeline -->
+          <div class="pt-4 border-t border-slate-100">
+            <div class="flex items-center justify-between text-xs font-semibold text-slate-400 max-w-2xl mx-auto">
+              <div id="crop-step-1" class="flex flex-col items-center space-y-1 text-indigo-600 font-semibold">
+                <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[10px]">✓</span>
+                <span>Uploading</span>
+              </div>
+              <div id="crop-line-1" class="flex-1 h-0.5 bg-slate-200 mx-2 transition-colors duration-300"></div>
+              <div id="crop-step-2" class="flex flex-col items-center space-y-1">
+                <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-[10px]">2</span>
+                <span>Detecting Ink</span>
+              </div>
+              <div id="crop-line-2" class="flex-1 h-0.5 bg-slate-200 mx-2 transition-colors duration-300"></div>
+              <div id="crop-step-3" class="flex flex-col items-center space-y-1">
+                <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-[10px]">3</span>
+                <span>Cropping Pages</span>
+              </div>
+              <div id="crop-line-3" class="flex-1 h-0.5 bg-slate-200 mx-2 transition-colors duration-300"></div>
+              <div id="crop-step-4" class="flex flex-col items-center space-y-1">
+                <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-[10px]">4</span>
+                <span>Completed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== RESIZE PDF TEMPLATE TAB ==================== -->
+      <section id="tab-resize" class="tab-content hidden space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-6">
+            <!-- Step 1 Card -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+              <div class="flex items-center space-x-3 mb-4">
+                <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold flex items-center justify-center">1</span>
+                <h3 class="text-base font-bold text-slate-900">Select PDF File</h3>
+              </div>
+
+              <div class="drag-drop-zone border-2 border-dashed border-slate-200 hover:border-indigo-500 rounded-2xl p-8 text-center cursor-pointer transition-colors duration-200 bg-slate-50/50" onclick="triggerFileInput('resize-file-input')" ondragover="dragOverHandler(event)" ondragleave="dragLeaveHandler(event)" ondrop="dropHandler(event, 'resize-file-info', 'resize-file-input')">
+                <input type="file" id="resize-file-input" class="hidden" accept=".pdf" onchange="fileSelectedHandler(this, 'resize-file-info')">
+                <div class="w-12 h-12 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto mb-3">
+                  <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" /></svg>
+                </div>
+
+              <div id="resize-file-info" class="mt-4 hidden bg-indigo-50/50 border border-indigo-100 rounded-xl p-3 flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                  <div class="w-9 h-9 rounded-lg bg-red-500 text-white flex items-center justify-center font-bold text-xs">PDF</div>
+                  <div>
+                    <p class="text-sm font-semibold text-slate-800 file-name-text">filename.pdf</p>
+                    <p class="text-xs text-slate-500 file-size-text">0.0 MB</p>
+                  </div>
+                </div>
+                <button onclick="clearFileInfo('resize-file-info', 'resize-file-input')" class="text-slate-400 hover:text-red-500 p-1.5 rounded-lg hover:bg-slate-100 transition-colors">
+                  <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+              </div>
+
+              <div id="resize-file-error" class="mt-3 hidden bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-xl text-sm font-semibold flex items-center justify-between shadow-sm transition-all duration-200">
+                <div class="flex items-center space-x-2.5">
+                  <svg class="w-5 h-5 text-rose-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                  </svg>
+                  <span class="file-error-text">Please select a PDF file first.</span>
+                </div>
+                <button type="button" onclick="hideFileError('resize')" class="text-rose-400 hover:text-rose-600 p-1 rounded-lg hover:bg-rose-100 transition-colors">
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col items-center">
+              <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 w-full text-left">Processing Controls</h4>
+              <div id="resize-run-btn-container" class="w-full">
+                <button onclick="runToolMock('resize', 'resize_pdf.py')" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-xl shadow-none hover:shadow-lg hover:shadow-indigo-500/40 active:scale-[0.98] transition-all flex items-center justify-center space-x-2">
+                  <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 0h-4m4 0l-5 5" /></svg>
+                  <span>Run Resize Tool</span>
+                </button>
+              </div>
+              <div id="resize-controls-container" class="hidden w-full space-y-2.5">
+                <div class="grid grid-cols-2 gap-2">
+                  <button onclick="pauseResumeTool('resize')" id="resize-pause-btn" class="w-full bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold py-2.5 px-3 rounded-xl shadow-sm"><span id="resize-pause-text">Pause</span></button>
+                  <button onclick="stopTool('resize')" class="w-full bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold py-2.5 px-3 rounded-xl shadow-sm"><span>Stop</span></button>
+                </div>
+                <button onclick="resetTool('resize')" class="w-full bg-slate-700 hover:bg-slate-800 text-slate-200 text-xs font-semibold py-2.5 px-3 rounded-xl"><span>Reset Tool</span></button>
+              </div>
+              <span class="text-xs text-slate-400 mt-3 text-center">Resizes document to selected book template</span>
+            </div>
+
+            <!-- Stats Widget -->
+            <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2 text-xs font-bold text-indigo-600">
+                  <svg class="h-4 w-4 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                  <span>Processing Status</span>
+                </div>
+                <span id="resize-widget-percent" class="text-xl font-bold font-mono text-indigo-600">0%</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                <div id="resize-widget-bar" class="bg-indigo-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+              </div>
+              <div class="space-y-2 text-xs divide-y divide-slate-100 pt-1">
+                <div class="flex justify-between py-1.5 text-slate-600"><span>Total Pages</span><span id="resize-stat-total" class="font-bold font-mono text-slate-900">0</span></div>
+                <div class="flex justify-between py-1.5 text-slate-600"><span>Processed</span><span id="resize-stat-processed" class="font-bold font-mono text-slate-900">0</span></div>
+                <div class="flex justify-between py-1.5 text-slate-600"><span>Remaining</span><span id="resize-stat-remaining" class="font-bold font-mono text-slate-900">0</span></div>
+                <div class="flex justify-between py-1.5 text-slate-600"><span>Elapsed Time</span><span id="resize-stat-elapsed" class="font-bold font-mono text-slate-900">00:00:00</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Donut Panel -->
+        <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-8 space-y-6">
+          <div class="flex items-center space-x-6">
+            <div class="relative w-20 h-20 flex items-center justify-center shrink-0">
+              <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                <path class="text-slate-100" stroke-width="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                <path id="resize-donut-ring" class="text-indigo-600 transition-all duration-300" stroke-dasharray="0, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+              </svg>
+              <span id="resize-donut-text" class="absolute text-sm font-bold font-mono text-indigo-700">0%</span>
+            </div>
+
+            <div class="flex-1 space-y-2">
+              <h4 id="resize-bottom-title" class="text-base font-bold text-slate-900">Processing Document...</h4>
+              <p id="resize-bottom-status" class="text-xs text-slate-500 font-mono">Scaling and centering pages to template...</p>
+              <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden border border-slate-200">
+                <div id="resize-bottom-bar" class="bg-indigo-600 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stepper Timeline -->
+          <div class="pt-4 border-t border-slate-100">
+            <div class="flex items-center justify-between text-xs font-semibold text-slate-400 max-w-2xl mx-auto">
+              <div id="resize-step-1" class="flex flex-col items-center space-y-1 text-indigo-600 font-semibold">
+                <span class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[10px]">✓</span>
+                <span>Uploading</span>
+              </div>
+              <div id="resize-line-1" class="flex-1 h-0.5 bg-slate-200 mx-2 transition-colors duration-300"></div>
+              <div id="resize-step-2" class="flex flex-col items-center space-y-1">
+                <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-[10px]">2</span>
+                <span>Initializing</span>
+              </div>
+              <div id="resize-line-2" class="flex-1 h-0.5 bg-slate-200 mx-2 transition-colors duration-300"></div>
+              <div id="resize-step-3" class="flex flex-col items-center space-y-1">
+                <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-[10px]">3</span>
+                <span>Resizing Pages</span>
+              </div>
+              <div id="resize-line-3" class="flex-1 h-0.5 bg-slate-200 mx-2 transition-colors duration-300"></div>
+              <div id="resize-step-4" class="flex flex-col items-center space-y-1">
+                <span class="w-6 h-6 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-[10px]">4</span>
+                <span>Completed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    // Completely suppress native browser pop-up alert dialogs across the entire application
+    window.alert = function(msg) {
+      console.warn("Native alert suppressed:", msg);
+      const visibleTab = document.querySelector('.tab-content:not(.hidden)');
+      const activeTabId = visibleTab ? visibleTab.id.replace('tab-', '') : 'align';
+      if (typeof showFileError === 'function') {
+        showFileError(activeTabId, msg || 'Please select a PDF file first.');
+      }
+    };
+
+    // Tab Headers titles map
+    const tabHeaders = {
+      dashboard: { title: "Dashboard Overview", subtitle: "Welcome back! Choose a tool to get started." },
+      align: { title: "Align PDF Numbers", subtitle: "Align page numbers across all PDF pages with precision" },
+      border: { title: "Border PDF Adder", subtitle: "Add custom millimeter margin borders to PDF pages" },
+      convert: { title: "Convert to 600 DPI", subtitle: "Convert PDF pages to high-quality 600 DPI resolution" },
+      crop: { title: "Crop PDF Engine", subtitle: "Automatically crop page margins & remove scanner binding lines" },
+      resize: { title: "Resize PDF Template", subtitle: "Resize PDF documents to standard size templates" }
+    };
+
+    // Tab switching logic
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+
+      // Update Nav Buttons
+      ['dashboard', 'align', 'border', 'convert', 'crop', 'resize'].forEach(id => {
+        const btn = document.getElementById('nav-' + id);
+        if (btn) {
+          if (id === tabId) {
+            btn.className = 'w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 bg-indigo-600 text-white shadow-md shadow-indigo-600/20';
+          } else {
+            btn.className = 'w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100';
+          }
+        }
+      });
+
+      // Show selected tab content
+      const target = document.getElementById('tab-' + tabId);
+      if (target) target.classList.remove('hidden');
+
+      // Update Header
+      if (tabHeaders[tabId]) {
+        document.getElementById('top-title').innerText = tabHeaders[tabId].title;
+        document.getElementById('top-subtitle').innerText = tabHeaders[tabId].subtitle;
+      }
+    }
+
+    // Toggle Tunables Collapsible
+    function toggleTunables(id) {
+      const el = document.getElementById(id);
+      const txt = document.getElementById('align-tunables-toggle-text');
+      if (el) {
+        el.classList.toggle('hidden');
+        if (txt) txt.innerText = el.classList.contains('hidden') ? 'Show Tunables' : 'Hide Tunables';
+      }
+    }
+
+    // Template Selector for Resize Tool
+    function selectTemplate(templateId, label) {
+      document.querySelectorAll('.template-card').forEach(card => {
+        card.classList.remove('border-indigo-600', 'bg-indigo-50/20', 'border-2');
+        card.classList.add('border-slate-200', 'border');
+        const badge = card.querySelector('.badge-icon');
+        if (badge) badge.remove();
+      });
+
+      const selected = document.getElementById('tpl-' + templateId);
+      if (selected) {
+        selected.classList.remove('border-slate-200', 'border');
+        selected.classList.add('border-2', 'border-indigo-600', 'bg-indigo-50/20');
+        const badge = document.createElement('span');
+        badge.className = 'badge-icon absolute top-2 right-2 w-4 h-4 bg-indigo-600 text-white rounded-full flex items-center justify-center text-[10px] font-bold shadow-sm';
+        badge.innerText = '✓';
+        selected.appendChild(badge);
+      }
+
+      document.getElementById('selected-template-id').value = templateId;
+    }
+
+    // Drag and Drop File Handlers
+    function triggerFileInput(inputId) {
+      document.getElementById(inputId).click();
+    }
+
+    function toggleCustomDropdown(menuId) {
+      const menu = document.getElementById(menuId);
+      if (!menu) return;
+      menu.classList.toggle('hidden');
+      const arrowId = menuId.replace('-menu', '-arrow');
+      const arrow = document.getElementById(arrowId);
+      if (arrow) arrow.classList.toggle('rotate-180');
+    }
+
+    function selectAlignTemplate(value, displayText, badgeText) {
+      document.getElementById('align-template-size').value = value;
+      document.getElementById('align-tpl-text').innerText = displayText;
+      document.getElementById('align-tpl-menu').classList.add('hidden');
+      const arrow = document.getElementById('align-tpl-arrow');
+      if (arrow) arrow.classList.remove('rotate-180');
+    }
+
+    function selectAlignDpi(value, label) {
+      document.getElementById('align-output-dpi').value = value;
+      document.getElementById('align-dpi-text').innerText = label;
+      document.getElementById('align-dpi-menu').classList.add('hidden');
+      const arrow = document.getElementById('align-dpi-arrow');
+      if (arrow) arrow.classList.remove('rotate-180');
+    }
+
+    function selectConvertMode(value, displayText, badgeText) {
+      document.getElementById('convert-color-mode').value = value;
+      document.getElementById('convert-mode-text').innerText = displayText;
+      document.getElementById('convert-mode-menu').classList.add('hidden');
+      const arrow = document.getElementById('convert-mode-arrow');
+      if (arrow) arrow.classList.remove('rotate-180');
+    }
+
+    // Interactive Theme Selector Toggle & Persistence
+    function toggleThemeMenu() {
+      const menu = document.getElementById('theme-popup-menu');
+      const arrow = document.getElementById('theme-menu-arrow');
+      if (menu) menu.classList.toggle('hidden');
+      if (arrow) arrow.classList.toggle('rotate-180');
+    }
+
+    function setTheme(theme) {
+      const isDark = theme === 'dark';
+      localStorage.setItem('pod_theme', theme);
+
+      // Close popup menu
+      const menu = document.getElementById('theme-popup-menu');
+      const arrow = document.getElementById('theme-menu-arrow');
+      if (menu) menu.classList.add('hidden');
+      if (arrow) arrow.classList.remove('rotate-180');
+
+      // Update Theme Button Label & Icon
+      const btnText = document.getElementById('theme-btn-text');
+      const btnIcon = document.getElementById('theme-btn-icon');
+      const checkLight = document.getElementById('theme-check-light');
+      const checkDark = document.getElementById('theme-check-dark');
+
+      if (isDark) {
+        if (btnText) btnText.innerText = 'Dark Mode';
+        if (btnIcon) btnIcon.innerHTML = `<svg class="h-4 w-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>`;
+        if (checkDark) checkDark.classList.remove('hidden');
+        if (checkLight) checkLight.classList.add('hidden');
+      } else {
+        if (btnText) btnText.innerText = 'Light Mode';
+        if (btnIcon) btnIcon.innerHTML = `<svg class="h-4 w-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>`;
+        if (checkLight) checkLight.classList.remove('hidden');
+        if (checkDark) checkDark.classList.add('hidden');
+      }
+
+      // Apply Dark Mode CSS classes to main container & cards
+      const mainContent = document.querySelector('main');
+      const header = document.querySelector('header');
+      const topTitle = document.getElementById('top-title');
+      const topSubtitle = document.getElementById('top-subtitle');
+
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    }
+
+    // Close custom dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      ['align-tpl', 'align-dpi', 'convert-mode'].forEach(prefix => {
+        const btn = document.getElementById(prefix + '-btn');
+        const menu = document.getElementById(prefix + '-menu');
+        const arrow = document.getElementById(prefix + '-arrow');
+        if (btn && menu && !btn.contains(e.target) && !menu.contains(e.target)) {
+          menu.classList.add('hidden');
+          if (arrow) arrow.classList.remove('rotate-180');
+        }
+      });
+
+      const themeBtn = document.getElementById('theme-select-btn');
+      const themeMenu = document.getElementById('theme-popup-menu');
+      const themeArrow = document.getElementById('theme-menu-arrow');
+      if (themeBtn && themeMenu && !themeBtn.contains(e.target) && !themeMenu.contains(e.target)) {
+        themeMenu.classList.add('hidden');
+        if (themeArrow) themeArrow.classList.remove('rotate-180');
+      }
+    });
+
+    // Restore Theme preference on Load
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('pod_theme') || 'light';
+      setTheme(savedTheme);
+    });
+
+    // Global Process Execution Controllers State
+    window.processStates = window.processStates || {};
+    window.processTimers = window.processTimers || {};
+
+    function getProcessState(tabId) {
+      if (!window.processStates[tabId]) {
+        window.processStates[tabId] = { isPaused: false, isStopped: false, controller: null, startTime: null };
+      }
+      return window.processStates[tabId];
+    }
+
+    function pauseResumeTool(tabId) {
+      const ps = getProcessState(tabId);
+      ps.isPaused = !ps.isPaused;
+      const btn = document.getElementById(tabId + '-pause-btn');
+      const text = document.getElementById(tabId + '-pause-text');
+
+      if (ps.isPaused) {
+        if (btn) btn.className = 'w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold py-2.5 px-3 rounded-xl shadow-sm transition-all flex items-center justify-center space-x-1.5';
+        if (text) text.innerText = 'Resume ‣';
+        updateProgress(tabId, window.tabState[tabId]?.pct || 0, 'Execution Paused ⏸');
+      } else {
+        if (btn) btn.className = 'w-full bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold py-2.5 px-3 rounded-xl shadow-sm transition-all flex items-center justify-center space-x-1.5';
+        if (text) text.innerText = 'Pause';
+        updateProgress(tabId, window.tabState[tabId]?.pct || 0, 'Processing document...');
+      }
+    }
+
+    function stopTool(tabId) {
+      const ps = getProcessState(tabId);
+      ps.isStopped = true;
+      if (ps.controller) {
+        try { ps.controller.abort(); } catch(e) {}
+      }
+      updateProgress(tabId, 100, 'Process Stopped ⏹', false, true);
+    }
+
+    function resetTool(tabId) {
+      const ps = getProcessState(tabId);
+      ps.isStopped = true;
+      ps.isPaused = false;
+      if (ps.controller) {
+        try { ps.controller.abort(); } catch(e) {}
+      }
+      if (window.processTimers[tabId]) clearInterval(window.processTimers[tabId]);
+
+      const runBtnContainer = document.getElementById(tabId + '-run-btn-container');
+      const controlsContainer = document.getElementById(tabId + '-controls-container');
+      if (runBtnContainer) runBtnContainer.classList.remove('hidden');
+      if (controlsContainer) controlsContainer.classList.add('hidden');
+
+      updateProgress(tabId, 0, 'Ready to Process');
+      if (window.tabState && window.tabState[tabId]) {
+        window.tabState[tabId] = { totalPages: 0, currentPage: 0, pct: 0 };
+      }
+    }
+
+    // Modern file upload drag & drop visual feedbacks
+    function dragOverHandler(e) {
+      e.preventDefault();
+      e.currentTarget.classList.add('border-indigo-500', 'bg-indigo-50/30');
+    }
+
+    function dragLeaveHandler(e) {
+      e.currentTarget.classList.remove('border-indigo-500', 'bg-indigo-50/30');
+    }
+
+    function dropHandler(e, infoDivId, inputId) {
+      e.preventDefault();
+      e.currentTarget.classList.remove('border-indigo-500', 'bg-indigo-50/30');
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        const file = e.dataTransfer.files[0];
+        if (file.type === "application/pdf" || file.name.endsWith('.pdf')) {
+          displayFileInfo(file, infoDivId);
+          const input = document.getElementById(inputId);
+          const dataTransfer = new DataTransfer();
+          dataTransfer.items.add(file);
+          input.files = dataTransfer.files;
+        } else {
+          showFileError(tabId, "Please upload PDF files only.");
+        }
+      }
+    }
+
+    async function detectAndSetPdfPages(tabId, file) {
+      if (!file) return;
+      if (!window.tabState) window.tabState = {};
+      if (!window.tabState[tabId]) window.tabState[tabId] = { totalPages: 0, currentPage: 0, pct: 0 };
+
+      // 1. Client-side ArrayBuffer /Count check
+      try {
+        const slice = await file.slice(Math.max(0, file.size - 300000)).arrayBuffer();
+        const text = new TextDecoder('ascii').decode(slice);
+        const matches = [...text.matchAll(/\/Count\s+(\d+)/g)];
+        if (matches && matches.length > 0) {
+          const count = parseInt(matches[matches.length - 1][1]);
+          if (count > 0 && count < 10000) {
+            window.tabState[tabId].totalPages = count;
+            updateProgress(tabId, window.tabState[tabId].pct || 0, `Loaded PDF: ${count} pages`);
+            return;
+          }
+        }
+      } catch(e) {}
+
+      // 2. Fallback API call to /api/pdf_info
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+        const res = await fetch('/api/pdf_info', { method: 'POST', body: formData });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.pages > 0) {
+            window.tabState[tabId].totalPages = data.pages;
+            updateProgress(tabId, window.tabState[tabId].pct || 0, `Loaded PDF: ${data.pages} pages`);
+          }
+        }
+      } catch(e) {}
+    }
+
+    function fileSelectedHandler(input, infoDivId) {
+      if (input.files && input.files.length > 0) {
+        displayFileInfo(input.files[0], infoDivId);
+      }
+    }
+
+    
+    function showFileError(tabId, message = 'Please select a PDF file first.') {
+      const errorDiv = document.getElementById(tabId + '-file-error');
+      if (errorDiv) {
+        const textEl = errorDiv.querySelector('.file-error-text');
+        if (textEl) textEl.innerText = message;
+        errorDiv.classList.remove('hidden');
+      }
+
+      const dropzone = document.querySelector(`#tab-${tabId} .drag-drop-zone`);
+      if (dropzone) {
+        dropzone.classList.add('border-rose-400', 'bg-rose-50/40', 'ring-2', 'ring-rose-200');
+        dropzone.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    function hideFileError(tabId) {
+      const errorDiv = document.getElementById(tabId + '-file-error');
+      if (errorDiv) errorDiv.classList.add('hidden');
+
+      const dropzone = document.querySelector(`#tab-${tabId} .drag-drop-zone`);
+      if (dropzone) {
+        dropzone.classList.remove('border-rose-400', 'bg-rose-50/40', 'ring-2', 'ring-rose-200');
+      }
+    }
+
+    function displayFileInfo(file, infoDivId) {
+      const tabId = infoDivId.split('-')[0];
+      hideFileError(tabId);
+      const infoDiv = document.getElementById(infoDivId);
+      if (!infoDiv) return;
+      const nameEl = infoDiv.querySelector('.file-name-text');
+      const sizeEl = infoDiv.querySelector('.file-size-text');
+      if (nameEl) nameEl.innerText = file.name;
+      if (sizeEl) sizeEl.innerText = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+      infoDiv.classList.remove('hidden');
+
+      const tabId = infoDivId.split('-')[0];
+      detectAndSetPdfPages(tabId, file);
+    }
+
+    function clearFileInfo(infoDivId, inputId) {
+      const tabId = infoDivId.split('-')[0];
+      hideFileError(tabId);
+      const infoDiv = document.getElementById(infoDivId);
+      const input = document.getElementById(inputId);
+      if (infoDiv) infoDiv.classList.add('hidden');
+      if (input) input.value = '';
+      const tabId = infoDivId.split('-')[0];
+      if (window.tabState && window.tabState[tabId]) {
+        window.tabState[tabId] = { totalPages: 0, currentPage: 0, pct: 0 };
+        updateProgress(tabId, 0, 'Ready to Process');
+      }
+    }
+
+    async function openFolderPicker(inputId) {
+      const inputEl = document.getElementById(inputId);
+      if (!inputEl) return;
+
+      // 1. Try modern native File System Access API (showDirectoryPicker)
+      if ('showDirectoryPicker' in window) {
+        try {
+          const dirHandle = await window.showDirectoryPicker();
+          if (dirHandle && dirHandle.name) {
+            inputEl.value = dirHandle.name;
+            return;
+          }
+        } catch (err) {
+          if (err.name === 'AbortError') return; // User cancelled
+        }
+      }
+
+      // 2. Native Directory Picker Input Fallback
+      let dirInput = document.getElementById(inputId + '-dir-picker-native');
+      if (!dirInput) {
+        dirInput = document.createElement('input');
+        dirInput.id = inputId + '-dir-picker-native';
+        dirInput.type = 'file';
+        dirInput.setAttribute('webkitdirectory', '');
+        dirInput.setAttribute('directory', '');
+        dirInput.style.display = 'none';
+        document.body.appendChild(dirInput);
+
+        dirInput.addEventListener('change', (e) => {
+          if (e.target.files && e.target.files.length > 0) {
+            const firstFile = e.target.files[0];
+            const relPath = firstFile.webkitRelativePath || '';
+            const folderName = relPath.split('/')[0] || firstFile.name;
+            inputEl.value = folderName;
+          }
+        });
+      }
+      dirInput.click();
+    }
+    async function loadWorkspaceInfo() {
+      try {
+        const res = await fetch('/api/workspace');
+        if (res.ok) {
+          const data = await res.json();
+          const path = data.outputs_dir;
+          const el = document.getElementById('sidebar-workspace-path');
+          if (el) {
+            el.innerText = path;
+            el.title = path;
+          }
+          ['align', 'border', 'convert', 'crop', 'resize'].forEach(tab => {
+            const inp = document.getElementById(`${tab}-output-dir`);
+            if (inp && !inp.value.trim()) {
+              inp.placeholder = `Default: ${path}`;
+            }
+          });
+        }
+      } catch (e) {
+        console.error('Error fetching workspace path:', e);
+      }
+    }
+
+    function openWorkspaceModal() {
+      const currentPath = document.getElementById('sidebar-workspace-path')?.innerText || '';
+      const input = document.getElementById('modal-workspace-input');
+      if (input && currentPath !== 'Loading save location...') {
+        input.value = currentPath;
+      }
+      document.getElementById('change-workspace-modal')?.classList.remove('hidden');
+    }
+
+    function closeWorkspaceModal() {
+      document.getElementById('change-workspace-modal')?.classList.add('hidden');
+    }
+
+    async function saveWorkspaceFolder() {
+      const input = document.getElementById('modal-workspace-input');
+      if (!input || !input.value.trim()) {
+        showToast('Please enter a valid folder path', 'warning');
+        return;
+      }
+      const newPath = input.value.trim();
+
+      try {
+        const res = await fetch('/api/workspace', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ outputs_dir: newPath })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          const el = document.getElementById('sidebar-workspace-path');
+          if (el) {
+            el.innerText = data.outputs_dir;
+            el.title = data.outputs_dir;
+          }
+          ['align', 'border', 'convert', 'crop', 'resize'].forEach(tab => {
+            const inp = document.getElementById(`${tab}-output-dir`);
+            if (inp && !inp.value.trim()) {
+              inp.placeholder = `Default: ${data.outputs_dir}`;
+            }
+          });
+          closeWorkspaceModal();
+          showToast('Save location updated successfully!', 'success');
+        } else {
+          showToast(data.detail || 'Failed to set folder path', 'error');
+        }
+      } catch (e) {
+        showToast('Error saving folder path: ' + e.message, 'error');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadWorkspaceInfo();
+    });
+
+    // Format seconds into HH:MM:SS
+    function formatTime(seconds) {
+      const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
+      const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+      const s = Math.floor(seconds % 60).toString().padStart(2, '0');
+      return `${h}:${m}:${s}`;
+    }
+
+    function updateStepper(tabId, step) {
+      const colorClass = tabId === 'border' ? 'blue' : tabId === 'convert' ? 'emerald' : tabId === 'crop' ? 'amber' : tabId === 'resize' ? 'purple' : 'indigo';
+      
+      for (let i = 1; i <= 4; i++) {
+        const stepEl = document.getElementById(`${tabId}-step-${i}`);
+        if (!stepEl) continue;
+        const iconSpan = stepEl.querySelector('span:first-child');
+        
+        if (i < step) {
+          stepEl.className = `flex flex-col items-center space-y-1 text-${colorClass}-600 font-semibold`;
+          if (iconSpan) {
+            iconSpan.className = `w-6 h-6 rounded-full bg-${colorClass}-600 text-white flex items-center justify-center text-[10px] font-bold`;
+            iconSpan.innerText = '✓';
+          }
+        } else if (i === step) {
+          stepEl.className = `flex flex-col items-center space-y-1 text-${colorClass}-600 font-bold`;
+          if (iconSpan) {
+            iconSpan.className = `w-6 h-6 rounded-full bg-${colorClass}-600 text-white flex items-center justify-center text-[10px] font-bold shadow-md animate-pulse`;
+            iconSpan.innerText = i === 4 ? '✓' : i;
+          }
+        } else {
+          stepEl.className = `flex flex-col items-center space-y-1 text-slate-400 font-normal`;
+          if (iconSpan) {
+            iconSpan.className = `w-6 h-6 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-[10px]`;
+            iconSpan.innerText = i;
+          }
+        }
+
+        if (i < 4) {
+          const lineEl = document.getElementById(`${tabId}-line-${i}`);
+          if (lineEl) {
+            if (i < step) {
+              lineEl.className = `flex-1 h-0.5 bg-${colorClass}-600 mx-2 transition-colors duration-300`;
+            } else {
+              lineEl.className = `flex-1 h-0.5 bg-slate-200 mx-2 transition-colors duration-300`;
+            }
+          }
+        }
+      }
+    }
+
+    function updateProgress(tabId, percent, statusText, isSuccess = false, isError = false) {
+      const clampedPct = Math.min(100, Math.max(0, Math.round(percent)));
+      if (!window.tabState) window.tabState = {};
+      if (!window.tabState[tabId]) window.tabState[tabId] = {};
+      window.tabState[tabId].pct = clampedPct;
+
+      // 1. Right Widget Progress
+      const widgetPercent = document.getElementById(tabId + '-widget-percent');
+      const widgetBar = document.getElementById(tabId + '-widget-bar');
+      if (widgetPercent) widgetPercent.innerText = clampedPct + '%';
+      if (widgetBar) widgetBar.style.width = clampedPct + '%';
+
+      // 2. Stats Rows
+      const state = window.tabState[tabId];
+      const totalEl = document.getElementById(tabId + '-stat-total');
+      const processedEl = document.getElementById(tabId + '-stat-processed');
+      const remainingEl = document.getElementById(tabId + '-stat-remaining');
+      
+      if (totalEl) totalEl.innerText = state.totalPages || 0;
+      if (processedEl) processedEl.innerText = state.currentPage || 0;
+      if (remainingEl) remainingEl.innerText = state.totalPages ? Math.max(0, state.totalPages - (state.currentPage || 0)) : 0;
+
+      // 3. Bottom Donut & Progress Bar
+      const donutRing = document.getElementById(tabId + '-donut-ring');
+      const donutText = document.getElementById(tabId + '-donut-text');
+      const bottomTitle = document.getElementById(tabId + '-bottom-title');
+      const bottomStatus = document.getElementById(tabId + '-bottom-status');
+      const bottomBar = document.getElementById(tabId + '-bottom-bar');
+
+      if (donutRing) donutRing.setAttribute('stroke-dasharray', `${clampedPct}, 100`);
+      if (donutText) donutText.innerText = clampedPct + '%';
+      if (bottomBar) bottomBar.style.width = clampedPct + '%';
+
+      if (isSuccess || clampedPct === 100) {
+        if (state.totalPages > 0) state.currentPage = state.totalPages;
+        if (totalEl) totalEl.innerText = state.totalPages || 0;
+        if (processedEl) processedEl.innerText = state.totalPages || state.currentPage || 0;
+        if (remainingEl) remainingEl.innerText = '0';
+
+        if (bottomTitle) bottomTitle.innerText = 'PDF Processing Complete! 100%';
+        if (bottomStatus) bottomStatus.innerText = 'All pages processed successfully.';
+        if (bottomBar) bottomBar.className = 'bg-emerald-600 h-3 rounded-full transition-all duration-300';
+        updateStepper(tabId, 4);
+      } else if (isError) {
+        if (bottomTitle) bottomTitle.innerText = 'Processing Error';
+        if (bottomStatus) bottomStatus.innerText = statusText || 'Execution failed.';
+        if (bottomBar) bottomBar.className = 'bg-red-600 h-3 rounded-full transition-all duration-300';
+      } else {
+        if (bottomTitle) bottomTitle.innerText = 'Processing Document...';
+        if (bottomStatus && statusText) bottomStatus.innerText = statusText;
+        if (clampedPct >= 70) updateStepper(tabId, 3);
+        else if (clampedPct >= 15) updateStepper(tabId, 2);
+        else updateStepper(tabId, 1);
+      }
+    }
+
+    // Connect frontend tab inputs to actual FastAPI backend endpoints
+    async function runToolMock(tabId, scriptName) {
+      const fileInput = document.getElementById(tabId + '-file-input');
+
+      if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+        showFileError(tabId, 'Please select a PDF file first.');
+        return;
+      }
+      hideFileError(tabId);
+
+      const file = fileInput.files[0];
+      if (!window.tabState) window.tabState = {};
+      const existingPages = window.tabState[tabId]?.totalPages || 0;
+      window.tabState[tabId] = { totalPages: existingPages, currentPage: 0, pct: 5 };
+      const state = window.tabState[tabId];
+
+      if (state.totalPages === 0) {
+        await detectAndSetPdfPages(tabId, file);
+      }
+
+      const ps = getProcessState(tabId);
+      ps.isPaused = false;
+      ps.isStopped = false;
+      ps.startTime = Date.now();
+      ps.controller = new AbortController();
+
+      // Start Timer Interval for Live Elapsed & ETA
+      if (window.processTimers[tabId]) clearInterval(window.processTimers[tabId]);
+      window.processTimers[tabId] = setInterval(() => {
+        if (ps.isPaused || ps.isStopped) return;
+        const elapsedSec = Math.floor((Date.now() - ps.startTime) / 1000);
+        const elapsedEl = document.getElementById(tabId + '-stat-elapsed');
+        const etaEl = document.getElementById(tabId + '-stat-eta');
+        if (elapsedEl) elapsedEl.innerText = formatTime(elapsedSec);
+
+        if (state.totalPages > 0 && state.currentPage > 0 && state.currentPage < state.totalPages) {
+          const secPerPage = elapsedSec / state.currentPage;
+          const remPages = state.totalPages - state.currentPage;
+          const etaSec = Math.round(secPerPage * remPages);
+          if (etaEl) etaEl.innerText = formatTime(etaSec);
+        }
+      }, 1000);
+
+      // Show Controls Container, Hide Run Button Container
+      const runBtnContainer = document.getElementById(tabId + '-run-btn-container');
+      const controlsContainer = document.getElementById(tabId + '-controls-container');
+      if (runBtnContainer) runBtnContainer.classList.add('hidden');
+      if (controlsContainer) controlsContainer.classList.remove('hidden');
+
+      updateProgress(tabId, 5, 'Uploading & Initializing PDF stream...');
+      updateStepper(tabId, 1);
+
+      const formData = new FormData();
+      formData.append('file', file);
+      
+      const outputDirInput = document.getElementById(tabId + '-output-dir');
+      if (outputDirInput && outputDirInput.value.trim()) {
+        formData.append('output_dir', outputDirInput.value.trim());
+      }
+
+      let endpoint = '';
+      if (tabId === 'align') {
+        endpoint = '/api/align';
+        const tplVal = document.getElementById('align-template-size')?.value;
+        if (tplVal && tplVal !== 'none') {
+          const parts = tplVal.split('x');
+          formData.append('tpl_w_mm', parts[0]);
+          formData.append('tpl_h_mm', parts[1]);
+        }
+      } else if (tabId === 'border') {
+        endpoint = '/api/border';
+        formData.append('top', document.getElementById('border-top').value);
+        formData.append('bottom', document.getElementById('border-bottom').value);
+        formData.append('left', document.getElementById('border-left').value);
+        formData.append('right', document.getElementById('border-right').value);
+      } else if (tabId === 'convert') {
+        endpoint = '/api/convert';
+      } else if (tabId === 'crop') {
+        endpoint = '/api/crop';
+      } else if (tabId === 'resize') {
+        endpoint = '/api/resize';
+        formData.append('template_id', document.getElementById('selected-template-id').value);
+      }
+      
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          body: formData,
+          signal: ps.controller.signal
+        });
+        
+        if (!response.ok) throw new Error(`HTTP status ${response.status}`);
+        
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = '';
+        
+        while (true) {
+          while (ps.isPaused && !ps.isStopped) {
+            await new Promise(resolve => setTimeout(resolve, 200));
+          }
+          if (ps.isStopped) break;
+
+          const { value, done } = await reader.read();
+          if (done) break;
+          
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop();
+          
+          for (const line of lines) {
+            if (line.startsWith('LOG:')) {
+              const logText = line.substring(4);
+              
+              if (/\[1\/4\]/i.test(logText)) updateStepper(tabId, 1);
+              else if (/\[2\/4\]/i.test(logText)) updateStepper(tabId, 2);
+              else if (/\[3\/4\]|\[4\/4\]/i.test(logText)) updateStepper(tabId, 3);
+
+              const totalMatch = logText.match(/\bPages\s*:\s*(\d+)/i) 
+                              || logText.match(/\bTotal\s+Pages\s*:\s*(\d+)/i)
+                              || logText.match(/Loaded\s+(\d+)\s+pages/i);
+              if (totalMatch) {
+                const parsedTotal = parseInt(totalMatch[1]);
+                if (parsedTotal > 0 && parsedTotal < 10000) {
+                  if (!state.totalPages || parsedTotal >= state.totalPages) {
+                    state.totalPages = parsedTotal;
+                  }
+                }
+              }
+
+              const pageMatch = logText.match(/\bp(\d{1,4}):/i) 
+                             || logText.match(/processing\s+page\s+(\d+)/i) 
+                             || logText.match(/\[PAGE\s+(\d+)\]/i);
+              if (pageMatch) {
+                const pageNum = parseInt(pageMatch[1]);
+                if (!state.totalPages || pageNum <= state.totalPages) {
+                  state.currentPage = Math.max(state.currentPage, pageNum);
+                }
+                
+                if (state.totalPages > 0) {
+                  if (state.currentPage >= state.totalPages) {
+                    updateProgress(tabId, 100, 'Processing Complete! 100%', true, false);
+                  } else {
+                    const pct = Math.min(99, Math.max(5, (state.currentPage / state.totalPages) * 100));
+                    updateProgress(tabId, pct, `Processing page ${state.currentPage} of ${state.totalPages}...`);
+                  }
+                } else {
+                  const estPct = Math.min(95, 5 + state.currentPage * 2);
+                  updateProgress(tabId, estPct, `Processing page ${state.currentPage}...`);
+                }
+              }
+
+              if (/Completed\.|DONE|Done\s*->|Successfully\s+processed|Output\s+saved\s+at|Saved\s+combined\s+PDF|Processing\s+complete/i.test(logText)) {
+                updateProgress(tabId, 100, 'Processing Complete! 100%', true, false);
+                if (window.processTimers[tabId]) clearInterval(window.processTimers[tabId]);
+              }
+            } else if (line.startsWith('SUCCESS:')) {
+              updateProgress(tabId, 100, 'Processing Complete! 100%', true, false);
+              if (window.processTimers[tabId]) clearInterval(window.processTimers[tabId]);
+            } else if (line.startsWith('ERROR:')) {
+              updateProgress(tabId, 100, 'Execution Failed', false, true);
+              if (window.processTimers[tabId]) clearInterval(window.processTimers[tabId]);
+            }
+          }
+        }
+      } catch (err) {
+        if (err.name === 'AbortError') {
+          updateProgress(tabId, 100, 'Process Stopped ⏹', false, true);
+        } else {
+          updateProgress(tabId, 100, 'Network Error', false, true);
+        }
+        if (window.processTimers[tabId]) clearInterval(window.processTimers[tabId]);
+      }
+    }
+
+    // User Profile Dropdown & Modal Logic
+    function toggleUserProfileMenu() {
+      const menu = document.getElementById('user-profile-menu');
+      const arrow = document.getElementById('user-profile-arrow');
+      if (menu) menu.classList.toggle('hidden');
+      if (arrow) arrow.classList.toggle('rotate-180');
+    }
+
+    function openLoginModal() {
+      const menu = document.getElementById('user-profile-menu');
+      if (menu) menu.classList.add('hidden');
+      const modal = document.getElementById('login-modal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeLoginModal() {
+      const modal = document.getElementById('login-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function handleUserLogin(event) {
+      event.preventDefault();
+      const username = document.getElementById('login-username').value.trim() || 'User';
+      const initial = username.charAt(0).toUpperCase();
+      
+      document.getElementById('header-user-name').innerText = username;
+      document.getElementById('menu-user-fullname').innerText = username;
+      document.getElementById('menu-user-email').innerText = username.toLowerCase().replace(/\s+/g, '') + '@podsuite.com';
+      document.getElementById('user-initial-icon').innerText = initial;
+      
+      localStorage.setItem('pod_user_name', username);
+      closeLoginModal();
+    }
+
+    // Strict Authentication Guard (Username: Admin | Password: Gentize@123!)
+    const REQUIRED_USER = "Admin";
+    const REQUIRED_PASS = "Gentize@123!";
+
+    function checkAuthState() {
+      const isAuth = sessionStorage.getItem('pod_auth_active') === 'true';
+      const lockScreen = document.getElementById('auth-lock-screen');
+      if (isAuth) {
+        if (lockScreen) lockScreen.classList.add('hidden');
+        const user = sessionStorage.getItem('pod_user_name') || REQUIRED_USER;
+        if (document.getElementById('header-user-name')) document.getElementById('header-user-name').innerText = user;
+        if (document.getElementById('menu-user-fullname')) document.getElementById('menu-user-fullname').innerText = user;
+      } else {
+        if (lockScreen) lockScreen.classList.remove('hidden');
+      }
+    }
+
+    function handleAuthLogin(event) {
+      if (event) event.preventDefault();
+      const userEl = document.getElementById('auth-username');
+      const passEl = document.getElementById('auth-password');
+      const alertBox = document.getElementById('auth-error-alert');
+      const errorText = document.getElementById('auth-error-text');
+
+      if (!userEl || !passEl) return;
+
+      const user = userEl.value.trim();
+      const pass = passEl.value.trim();
+
+      if (user.toLowerCase() === REQUIRED_USER.toLowerCase() && pass === REQUIRED_PASS) {
+        sessionStorage.setItem('pod_auth_active', 'true');
+        sessionStorage.setItem('pod_user_name', user);
+        if (alertBox) alertBox.classList.add('hidden');
+        checkAuthState();
+        if (typeof loadWorkspaceInfo === 'function') loadWorkspaceInfo();
+      } else {
+        if (alertBox) alertBox.classList.remove('hidden');
+        if (errorText) errorText.innerText = "Invalid Username or Password! Access Denied.";
+      }
+    }
+
+    function handleUserLogout() {
+      sessionStorage.removeItem('pod_auth_active');
+      sessionStorage.removeItem('pod_user_name');
+      const menu = document.getElementById('user-profile-menu');
+      if (menu) menu.classList.add('hidden');
+      checkAuthState();
+    }
+
+    function toggleAuthPasswordVisibility() {
+      const passInput = document.getElementById('auth-password');
+      if (passInput) {
+        if (passInput.type === 'password') {
+          passInput.type = 'text';
+        } else {
+          passInput.type = 'password';
+        }
+      }
+    }
+
+    // Close user dropdown on click outside
+    document.addEventListener('click', function(e) {
+      const userBtn = document.getElementById('user-profile-btn');
+      const userMenu = document.getElementById('user-profile-menu');
+      const userArrow = document.getElementById('user-profile-arrow');
+      if (userBtn && userMenu && !userBtn.contains(e.target) && !userMenu.contains(e.target)) {
+        userMenu.classList.add('hidden');
+        if (userArrow) userArrow.classList.remove('rotate-180');
+      }
+    });
+
+    // Check Auth State and Enable Folder Drag & Drop on Page Load
+    document.addEventListener('DOMContentLoaded', () => {
+      checkAuthState();
+
+      ['align', 'border', 'convert', 'crop', 'resize'].forEach(toolId => {
+        const input = document.getElementById(toolId + '-output-dir') || document.getElementById(toolId + '-output-path');
+        if (input) {
+          input.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            input.classList.add('border-indigo-500', 'bg-indigo-50/50');
+          });
+          input.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            input.classList.remove('border-indigo-500', 'bg-indigo-50/50');
+          });
+          input.addEventListener('drop', (e) => {
+            e.preventDefault();
+            input.classList.remove('border-indigo-500', 'bg-indigo-50/50');
+            if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+              const firstFile = e.dataTransfer.files[0];
+              const relPath = firstFile.webkitRelativePath || '';
+              const folderName = firstFile.path ? firstFile.path.substring(0, firstFile.path.lastIndexOf(firstFile.name) - 1) : (relPath ? relPath.split('/')[0] : (firstFile.name || ''));
+              if (folderName) input.value = folderName;
+            }
+          });
+        }
+      });
+
+      // Init Cyber Background Canvas from C:\Users\ADMIN\Music\animation\index.html
+      initCyberBgCanvas();
+    });
+
+    // Cyber Animated Background Engine (Loaded from C:\Users\ADMIN\Music\animation\index.html)
+    function initCyberBgCanvas() {
+      const canvas = document.getElementById('cyberBgCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let width, height;
+
+      function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      const particles = Array.from({ length: 45 }, () => ({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        size: Math.random() * 2.5 + 1,
+        speedY: Math.random() * 0.4 + 0.1,
+        speedX: Math.sin(Math.random() * Math.PI) * 0.3,
+        alpha: Math.random() * 0.7 + 0.3,
+        pulseSpeed: Math.random() * 0.02 + 0.005
+      }));
+
+      let time = 0;
+
+      function drawWaveBundle(yCenter, amplitude, freq, phase, strokeColor, glowColor, lineCount = 6) {
+        for (let i = 0; i < lineCount; i++) {
+          const offset = (i - lineCount / 2) * 8;
+          ctx.beginPath();
+
+          for (let x = 0; x <= width; x += 10) {
+            const sine1 = Math.sin(x * freq + time + phase);
+            const sine2 = Math.sin(x * freq * 0.5 - time * 0.6 + phase * 1.4) * 0.5;
+            const y = yCenter + offset + (sine1 + sine2) * (amplitude + i * 4);
+
+            if (x === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+
+          ctx.strokeStyle = strokeColor;
+          ctx.lineWidth = i === Math.floor(lineCount / 2) ? 2.5 : 1.5;
+          ctx.shadowColor = glowColor;
+          ctx.shadowBlur = 12;
+          ctx.stroke();
+        }
+      }
+
+      function animate() {
+        time += 0.015;
+
+        // Deep background gradient
+        const grad = ctx.createLinearGradient(0, 0, width, height);
+        grad.addColorStop(0, '#09081a');
+        grad.addColorStop(0.5, '#0d0b2e');
+        grad.addColorStop(1, '#180a38');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, width, height);
+
+        // Ambient corner radial glows
+        const cornerGlow1 = ctx.createRadialGradient(width * 0.1, height * 0.9, 0, width * 0.1, height * 0.9, width * 0.4);
+        cornerGlow1.addColorStop(0, 'rgba(112, 26, 230, 0.35)');
+        cornerGlow1.addColorStop(1, 'transparent');
+        ctx.fillStyle = cornerGlow1;
+        ctx.fillRect(0, 0, width, height);
+
+        const cornerGlow2 = ctx.createRadialGradient(width * 0.9, height * 0.4, 0, width * 0.9, height * 0.4, width * 0.35);
+        cornerGlow2.addColorStop(0, 'rgba(30, 100, 240, 0.25)');
+        cornerGlow2.addColorStop(1, 'transparent');
+        ctx.fillStyle = cornerGlow2;
+        ctx.fillRect(0, 0, width, height);
+
+        // Background Grid Dots
+        const gridGap = 35;
+        for (let x = gridGap / 2; x < width; x += gridGap) {
+          for (let y = gridGap / 2; y < height; y += gridGap) {
+            const dotAlpha = 0.08 + Math.sin(time * 2 + (x + y) * 0.005) * 0.05;
+            ctx.fillStyle = `rgba(140, 160, 255, ${dotAlpha})`;
+            ctx.beginPath();
+            ctx.arc(x, y, 1.2, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        // Particles
+        ctx.shadowBlur = 0;
+        particles.forEach(p => {
+          p.y -= p.speedY;
+          p.x += Math.sin(time + p.y * 0.01) * 0.3;
+
+          if (p.y < -10) {
+            p.y = height + 10;
+            p.x = Math.random() * width;
+          }
+
+          p.alpha += Math.sin(time * 5) * p.pulseSpeed;
+          const currentAlpha = Math.max(0.2, Math.min(0.9, p.alpha));
+
+          ctx.fillStyle = `rgba(160, 200, 255, ${currentAlpha})`;
+          ctx.shadowColor = '#60a5fa';
+          ctx.shadowBlur = 10;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        // Waves
+        drawWaveBundle(height * 0.65, 40, 0.004, 0, 'rgba(80, 140, 255, 0.65)', '#3b82f6', 7);
+        drawWaveBundle(height * 0.50, 50, 0.005, Math.PI * 0.7, 'rgba(160, 70, 255, 0.6)', '#a855f7', 7);
+        drawWaveBundle(height * 0.35, 30, 0.003, Math.PI * 1.3, 'rgba(90, 90, 240, 0.45)', '#6366f1', 5);
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    }
+  </script>
+
+  <!-- Full-Screen Auth Lock Screen (Cyber Animated Background from C:\Users\ADMIN\Music\animation\index.html) -->
+  <div id="auth-lock-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-[#090919] text-slate-100 p-4 select-none overflow-hidden">
+
+    <!-- Cyber Background Canvas -->
+    <canvas id="cyberBgCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
+
+    <!-- Overlay Vignette -->
+    <div class="absolute inset-0 pointer-events-none z-0" style="background: radial-gradient(circle at center, transparent 40%, rgba(5, 5, 15, 0.8) 100%);"></div>
+
+    <!-- Main Lock Screen Card -->
+    <div class="relative z-10 overflow-hidden bg-[#111728]/90 border border-indigo-500/20 backdrop-blur-2xl rounded-3xl p-8 md:p-9 max-w-md w-full shadow-2xl shadow-indigo-950/60 space-y-6 transition-all duration-300">
+      
+      <!-- Top Shield Lock Icon Header -->
+      <div class="text-center space-y-3 pt-1">
+        <div class="relative w-14 h-14 bg-gradient-to-tr from-indigo-600 via-indigo-500 to-indigo-700 rounded-2xl flex items-center justify-center mx-auto shadow-xl shadow-indigo-500/35 ring-4 ring-indigo-500/15">
+          <svg class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+        </div>
+
+        <div>
+          <h2 class="text-2xl font-black tracking-tight text-white">POD <span class="text-indigo-400">TEXT</span> SUITE</h2>
+          <p class="text-xs text-slate-400 mt-1 font-medium">Authentication Required to Access Tools</p>
+        </div>
+
+        <div class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-[11px] font-semibold text-indigo-300 shadow-inner">
+          <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+          <span>Protected Security Portal</span>
+        </div>
+      </div>
+
+      <!-- Error Alert Message -->
+      <div id="auth-error-alert" class="hidden bg-rose-500/10 border border-rose-500/30 rounded-2xl p-3.5 text-xs text-rose-400 flex items-center space-x-2.5 shadow-sm">
+        <svg class="w-4 h-4 shrink-0 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span id="auth-error-text" class="font-medium">Invalid Username or Password! Access Denied.</span>
+      </div>
+
+      <!-- Login Form -->
+      <form onsubmit="handleAuthLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Username</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            </div>
+            <input type="text" id="auth-username" required placeholder="Admin" class="w-full bg-[#182035]/80 border border-slate-700/80 rounded-xl pl-10 pr-4 py-3 text-sm text-white placeholder-slate-500 focus:bg-slate-800 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 outline-none transition-all font-medium">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">Password</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              </svg>
+            </div>
+            <input type="password" id="auth-password" required placeholder="••••••••" class="w-full bg-[#182035]/80 border border-slate-700/80 rounded-xl pl-10 pr-10 py-3 text-sm text-white placeholder-slate-500 focus:bg-slate-800 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 outline-none transition-all font-medium">
+            <button type="button" onclick="toggleAuthPasswordVisibility()" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white transition-colors">
+              <svg id="pass-eye-icon" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-600 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-indigo-600/35 hover:shadow-indigo-500/50 active:scale-[0.98] transition-all flex items-center justify-center space-x-2 text-sm mt-2">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" /></svg>
+          <span>Sign In & Unlock Tools</span>
+        </button>
+      </form>
+
+      <!-- Footer Security Note -->
+      <div class="flex items-center justify-center space-x-1.5 text-[11px] text-slate-500 pt-1 border-t border-slate-800/60">
+        <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+        <span>POD PDF Tool Suite v1.0 • Enterprise Security Protection</span>
+      </div>
+    </div>
+  </div>
+  <!-- Change Workspace Folder Modal -->
+  <div id="change-workspace-modal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-slate-200">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-2 text-slate-800 font-bold">
+          <svg class="w-5 h-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+          </svg>
+          <span class="text-sm">Change Save Location Folder</span>
+        </div>
+        <button onclick="closeWorkspaceModal()" class="text-slate-400 hover:text-slate-600 transition-colors p-1">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+      </div>
+      <p class="text-xs text-slate-500 leading-relaxed">
+        Specify the exact folder path on your computer where all processed output PDF files will be saved.
+      </p>
+      <div class="space-y-2">
+        <label class="text-xs font-semibold text-slate-700">Folder Path Location:</label>
+        <div class="flex space-x-2">
+          <input type="text" id="modal-workspace-input" class="flex-1 bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-mono text-slate-800 outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all" placeholder="e.g. D:\BOOKS or C:\Users\YourName\Documents">
+          <button onclick="openFolderPicker('modal-workspace-input')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-3 py-2.5 rounded-xl text-xs border border-slate-300 transition-colors">Browse</button>
+        </div>
+      </div>
+      <div class="flex justify-end space-x-2 pt-2 border-t border-slate-100">
+        <button onclick="closeWorkspaceModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs transition-colors">Cancel</button>
+        <button onclick="saveWorkspaceFolder()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl text-xs shadow-md shadow-indigo-500/20 transition-all">Save Location</button>
+      </div>
+    </div>
+  </div>
+</body>
+</h

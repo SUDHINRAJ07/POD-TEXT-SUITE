@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+
+# Distribution & Build
+build/
+dist/
+installer_output/
+*.egg-info/
+.eggs/
+*.spec
+*.iss
+Output/
+
+# Runtime Generated Outputs
+outputs/
+*.log
+.pod_text_suite_profile/
+
+# OS specific
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# IDEs
+.idea/
+.vscode/
+*.swp
