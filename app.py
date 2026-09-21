@@ -45,8 +45,12 @@ app.add_middleware(
 )
 
 # Workspace configuration
-DEFAULT_OUTPUT_DIR = Path.home() / "Pictures" / "pod text suite" / "outputs"
-DEFAULT_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+try:
+    DEFAULT_OUTPUT_DIR = Path.home() / "Pictures" / "pod text suite" / "outputs"
+    DEFAULT_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+except Exception:
+    DEFAULT_OUTPUT_DIR = BASE_DIR / "outputs"
+    DEFAULT_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 class WorkspaceConfig:
     def __init__(self):
@@ -478,4 +482,8 @@ def launch_app():
 if __name__ == "__main__":
     import multiprocessing
     multiprocessing.freeze_support()
-    launch_app()
+    if "PORT" in os.environ:
+        port = int(os.environ["PORT"])
+        uvicorn.run("app:app", host="0.0.0.0", port=port)
+    else:
+        launch_app()
